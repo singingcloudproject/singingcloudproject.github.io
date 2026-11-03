@@ -1,0 +1,74 @@
+{
+  "brand": "Singing Cloud Studio",
+  "site_url": "https://singingcloudproject.github.io/",
+  "noindex": true,
+  "whatsapp_number": "10000000000",
+  "formspree_id": "YOUR_FORM_ID",
+  "showreel_youtube_id": "",
+  "showreel_video": "",
+  "schema_type": "ProfessionalService",
+  "languages": [
+    {
+      "code": "en",
+      "dir": "ltr",
+      "path": "",
+      "label": "EN",
+      "enabled": true
+    },
+    {
+      "code": "fa",
+      "dir": "rtl",
+      "path": "fa/",
+      "label": "فا",
+      "enabled": true
+    },
+    {
+      "code": "hy",
+      "dir": "ltr",
+      "path": "hy/",
+      "label": "ՀՅ",
+      "enabled": false
+    }
+  ],
+  "sections": [
+    {
+      "id": "hero",
+      "type": "hero"
+    },
+    {
+      "id": "services",
+      "type": "cards",
+      "variant": "services",
+      "bg": "light"
+    },
+    {
+      "id": "clients",
+      "type": "cards",
+      "variant": "compact",
+      "bg": "light tint"
+    },
+    {
+      "id": "showreel",
+      "type": "showreel"
+    },
+    {
+      "id": "portfolio",
+      "type": "portfolio"
+    },
+    {
+      "id": "packages",
+      "type": "packages"
+    },
+    {
+      "id": "process",
+      "type": "steps"
+    },
+    {
+      "id": "contact",
+      "type": "contact"
+    }
+  ],
+  "hidden_sections": [
+    "testimonials"
+  ]
+}

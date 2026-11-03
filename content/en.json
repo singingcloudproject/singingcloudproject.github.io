@@ -1,0 +1,273 @@
+{
+  "meta": {
+    "title": "Website Design, SEO & Social Media | Singing Cloud Studio",
+    "description": "Website design and support, SEO, social media management for Instagram, TikTok & YouTube, logo design, AI photos & videos and AI chatbots for small businesses.",
+    "og_locale": "en_US",
+    "og_title": "Singing Cloud Studio — websites, SEO, social media & AI content",
+    "og_image_alt": "Singing Cloud Studio logo: a glossy blue cloud singing"
+  },
+  "nav": {
+    "links": {
+      "services": "Services",
+      "clients": "Who I work with",
+      "portfolio": "Portfolio",
+      "packages": "Packages",
+      "process": "How it works",
+      "contact": "Contact"
+    },
+    "cta": "Get in touch",
+    "menu": "Main menu",
+    "language": "Choose language",
+    "skip": "Skip to content"
+  },
+  "hero": {
+    "eyebrow": "Creative digital studio",
+    "title": "Singing Cloud Studio",
+    "title_sub": "Websites, SEO and social media that help you grow",
+    "subtitle": "A creative studio for artists, clinics, coaches and small businesses: website design, SEO, Instagram and TikTok management, logos, AI photos & videos and smart automation — in English and Persian.",
+    "cta": "Get in touch",
+    "secondary": "View services",
+    "secondary_target": "services",
+    "badges": [
+      "Free first chat",
+      "Personal, one-to-one service",
+      "English · Persian"
+    ],
+    "logo_alt": "Singing Cloud Studio logo: a glossy blue cloud singing"
+  },
+  "services": {
+    "kicker": "Services",
+    "title": "What I create for you",
+    "intro": "Everything you need to grow online — website design, SEO, social media management, graphic design, AI content and automation, from one studio.",
+    "items": [
+      {
+        "icon": "browser",
+        "name": "Websites",
+        "text": "Website design and development for small businesses — modern, fast, mobile-friendly sites in one language or several, with ongoing support."
+      },
+      {
+        "icon": "search",
+        "name": "SEO",
+        "text": "Get found on Google. Keyword research, clear structure and technical SEO, so the right people find you."
+      },
+      {
+        "icon": "social",
+        "name": "Social Media",
+        "text": "Social media management for Instagram, TikTok, X and YouTube: strategy, scripts, filming (depending on location), video editing and account management."
+      },
+      {
+        "icon": "palette",
+        "name": "Graphic Design",
+        "text": "Logo design and visual identity — the colours, fonts and style that make your brand instantly recognisable."
+      },
+      {
+        "icon": "sparkles",
+        "name": "AI Photos & Videos",
+        "text": "AI-generated photos and videos — striking images and short clips for posts, campaigns and ads."
+      },
+      {
+        "icon": "bot",
+        "name": "Automation & AI Assistants",
+        "text": "Auto-replies for Instagram and WhatsApp, AI chatbots and smart workflows that save you hours and answer clients around the clock."
+      }
+    ],
+    "cta": "Get in touch"
+  },
+  "clients": {
+    "kicker": "Who I work with",
+    "title": "Made for people with something to share",
+    "items": [
+      {
+        "icon": "music",
+        "name": "Artists & creators",
+        "text": "Musicians, performers and content creators building an audience."
+      },
+      {
+        "icon": "heart",
+        "name": "Clinics & beauty",
+        "text": "Clinics, salons and beauty professionals who want to look trustworthy online."
+      },
+      {
+        "icon": "cap",
+        "name": "Coaches & teachers",
+        "text": "Coaches, tutors and teachers sharing their knowledge."
+      },
+      {
+        "icon": "building",
+        "name": "Business owners",
+        "text": "Small and growing businesses that need steady, quality content."
+      }
+    ]
+  },
+  "showreel": {
+    "kicker": "Showreel",
+    "title": "See the work in motion",
+    "intro": "A quick look at edits, AI visuals and content made at the studio.",
+    "stats": [
+      {
+        "value": 6,
+        "suffix": "",
+        "label": "services"
+      },
+      {
+        "value": 2,
+        "suffix": "",
+        "label": "languages"
+      },
+      {
+        "value": 24,
+        "suffix": "h",
+        "label": "average reply"
+      }
+    ],
+    "video_label": "Singing Cloud Studio showreel video",
+    "video_note": "Your showreel video goes here"
+  },
+  "portfolio": {
+    "kicker": "Portfolio",
+    "title": "Selected work",
+    "intro": "A few recent projects. More coming soon.",
+    "placeholder_label": "Project image coming soon",
+    "items": [
+      {
+        "title": "Brother Nature — Instagram carousels",
+        "tag": "Hip hop artist · Instagram carousels",
+        "alt": "Instagram carousel designs for hip hop artist Brother Nature"
+      },
+      {
+        "title": "[Project title]",
+        "tag": "[Client · service]",
+        "alt": "[Describe this project image]"
+      },
+      {
+        "title": "[Project title]",
+        "tag": "[Client · service]",
+        "alt": "[Describe this project image]"
+      },
+      {
+        "title": "[Project title]",
+        "tag": "[Client · service]",
+        "alt": "[Describe this project image]"
+      },
+      {
+        "title": "[Project title]",
+        "tag": "[Client · service]",
+        "alt": "[Describe this project image]"
+      },
+      {
+        "title": "[Project title]",
+        "tag": "[Client · service]",
+        "alt": "[Describe this project image]"
+      }
+    ]
+  },
+  "packages": {
+    "kicker": "Packages",
+    "title": "Choose how we work together",
+    "intro": "Flexible packages as a starting point — every project gets a personal quote.",
+    "popular": "Most popular",
+    "cta": "Ask for a quote",
+    "items": [
+      {
+        "name": "Content Starter",
+        "for": "For artists and small brands getting started",
+        "features": [
+          "Edited reels every month",
+          "Instagram carousels",
+          "Fresh content ideas"
+        ],
+        "featured": false
+      },
+      {
+        "name": "Growth",
+        "for": "For creators and businesses ready to grow",
+        "features": [
+          "Edited reels and Instagram carousels",
+          "Scripts & a monthly content plan",
+          "AI photos and videos"
+        ],
+        "featured": true
+      },
+      {
+        "name": "Full Online Presence",
+        "for": "Website + content, all in one place",
+        "features": [
+          "Website design in one language or several",
+          "Launch content",
+          "Ongoing updates & support"
+        ],
+        "featured": false
+      }
+    ],
+    "note": "[Placeholder packages — edit them to match your real offer.]"
+  },
+  "process": {
+    "kicker": "How it works",
+    "title": "Simple from start to finish",
+    "steps": [
+      {
+        "title": "Free chat",
+        "text": "We talk about your goals, your audience and what you need — no obligation."
+      },
+      {
+        "title": "Plan",
+        "text": "I send a clear plan with ideas, timeline and price before any work begins."
+      },
+      {
+        "title": "Create",
+        "text": "I create your content, sharing drafts so you can give feedback along the way."
+      },
+      {
+        "title": "Deliver",
+        "text": "You receive polished, ready-to-use files — or a live website — on time."
+      }
+    ]
+  },
+  "testimonials": {
+    "kicker": "Kind words",
+    "title": "What clients say",
+    "items": [
+      {
+        "quote": "[Placeholder testimonial — a short, warm quote from a happy client goes here.]",
+        "name": "[Client name]",
+        "role": "[Role, company or project]",
+        "photo_alt": "Photo of [client name]"
+      }
+    ]
+  },
+  "contact": {
+    "kicker": "Contact",
+    "title": "Let's create something beautiful",
+    "intro": "Tell me about your project. The first chat is free, and I usually reply within one day.",
+    "whatsapp_btn": "Chat on WhatsApp",
+    "whatsapp_text": "Hello Singing Cloud Studio! I'd like to talk about a project.",
+    "whatsapp_note": "WhatsApp Business · replies in English or Persian",
+    "or": "Or send a message",
+    "form": {
+      "name": "Your name",
+      "email": "Email",
+      "phone": "WhatsApp / Telegram (optional)",
+      "topic": "What do you need?",
+      "topic_options": [
+        "Websites",
+        "SEO",
+        "Social Media",
+        "Graphic Design",
+        "AI Photos & Videos",
+        "Automation & AI Assistants",
+        "Not sure yet"
+      ],
+      "message": "Tell me about your project",
+      "send": "Send message",
+      "sending": "Sending…",
+      "success": "Thank you! Your message has been sent. I'll be in touch soon.",
+      "error": "Sorry, something went wrong. Please try again or message me on WhatsApp.",
+      "not_connected": "The form isn't connected yet — please use WhatsApp for now.",
+      "subject": "New enquiry — Singing Cloud Studio (EN)"
+    }
+  },
+  "footer": {
+    "tagline": "Content, video and websites that help you grow.",
+    "rights": "All rights reserved."
+  }
+}

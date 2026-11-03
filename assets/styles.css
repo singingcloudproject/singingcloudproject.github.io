@@ -382,3 +382,11 @@ p { margin: 0 0 1em; }
   .js .reveal, .js .reveal-zoom, .js[dir] .reveal-right { opacity: 1; translate: none; scale: none; }
   .art-glow { opacity: .75; }
 }
+
+/* ---------- after a form is sent: the fields hide and a "Thank you" box shows ---------- */
+.form.sent > :not(.form-thanks) { display: none; }
+.form-thanks { display: grid; justify-items: center; gap: 14px; padding: 34px 10px; text-align: center; outline: none; }
+.form-thanks p { margin: 0; font-size: 1.15rem; font-weight: 700; line-height: 1.6; }
+.form-thanks-icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%;
+  font-size: 30px; font-weight: 800; color: #7ee2a8; background: rgba(126, 226, 168, .12); border: 2px solid #7ee2a8; }
+.dark .form-thanks p { color: #fff; }

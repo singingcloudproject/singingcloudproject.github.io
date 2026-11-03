@@ -239,26 +239,32 @@ def s_portfolio(sec, t, ctx):
 
 
 def s_packages(sec, t, ctx):
+    """Packages & prices: one card per offer with a "starting from" price in USD.
+    "popular": true adds the gold "Most popular" badge."""
     cards = ""
     for it in t["items"]:
-        feat = "".join(f"<li>{icon('check')}{e(f)}</li>" for f in it["features"])
-        pop = f'<span class="tag-gold">{e(t["popular"])}</span>' if it.get("featured") else ""
+        pop = it.get("popular")
+        badge = f'<span class="tag-gold pkg-badge">{e(t["popular"])}</span>' if pop else ""
+        unit = f'<span class="pkg-unit">{e(it["unit"])}</span>' if it.get("unit") else ""
+        note = f'<p class="pkg-note">{e(it["note"])}</p>' if it.get("note") else ""
         cards += f"""
-      <article class="card package reveal {"featured" if it.get("featured") else ""}">
-        {pop}
+      <article class="card pkg reveal {"popular" if pop else ""}">
+        {badge}
+        <p class="pkg-cat">{e(it["cat"])}</p>
         <h3>{e(it["name"])}</h3>
-        <p class="muted">{e(it["for"])}</p>
-        <ul class="points">{feat}</ul>
-        <a class="btn {"btn-gold" if it.get("featured") else "btn-outline"}" href="#contact">{e(t["cta"])}</a>
+        <p class="pkg-price"><span class="pkg-from">{e(t["from"])}</span> <bdi dir="ltr" class="pkg-amount">{e(it["price"])}</bdi> {unit}</p>
+        {note}
       </article>"""
-    note = f'<p class="note reveal">{e(t["note"])}</p>' if t.get("note") else ""
     return f"""
 <section class="section light tint" id="{e(sec["id"])}">
   <div class="container">
     {head_block(t)}
-    <div class="cards three" data-stagger>{cards}
+    <div class="cards pkg-grid" data-stagger>{cards}
     </div>
-    {note}
+    <div class="pkg-custom reveal">
+      <p>{e(t["custom"])}</p>
+      <a class="btn btn-gold" href="#contact">{e(t["custom_cta"])}</a>
+    </div>
   </div>
 </section>"""
 
@@ -387,6 +393,13 @@ def build_schema(site, lang, t, langs, base, url):
             ],
         },
     }
+    # packages with "starting from" prices (USD)
+    studio["makesOffer"] = [
+        {"@type": "Offer", "name": it["name"], "description": it.get("note") or it["cat"],
+         "priceSpecification": {"@type": "PriceSpecification", "minPrice": it["amount"], "priceCurrency": "USD",
+                                **({"unitCode": it["unit_code"]} if it.get("unit_code") else {})}}
+        for it in t.get("packages", {}).get("items", []) if "amount" in it
+    ]
     website = {"@type": "WebSite", "@id": base + "#website", "url": base, "name": site["brand"],
                "inLanguage": [l["code"] for l in langs], "publisher": {"@id": base + "#studio"}}
     webpage = {"@type": "WebPage", "@id": url + "#webpage", "url": url, "name": t["meta"]["title"],

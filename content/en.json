@@ -163,43 +163,114 @@
   },
   "packages": {
     "kicker": "Packages",
-    "title": "Choose how we work together",
-    "intro": "Flexible packages as a starting point — every project gets a personal quote.",
+    "title": "Packages & prices",
+    "intro": "All prices are starting points in US dollars — the final price depends on your project. Every project starts with a free chat.",
     "popular": "Most popular",
-    "cta": "Ask for a quote",
+    "from": "from",
+    "custom": "Custom package?",
+    "custom_cta": "Get in touch",
     "items": [
       {
-        "name": "Content Starter",
-        "for": "For artists and small brands getting started",
-        "features": [
-          "Edited reels every month",
-          "Instagram carousels",
-          "Fresh content ideas"
-        ],
-        "featured": false
+        "cat": "Websites",
+        "name": "One-page website",
+        "price": "$500",
+        "unit": "",
+        "note": "Includes 3 months of support",
+        "amount": 500,
+        "popular": true
       },
       {
-        "name": "Growth",
-        "for": "For creators and businesses ready to grow",
-        "features": [
-          "Edited reels and Instagram carousels",
-          "Scripts & a monthly content plan",
-          "AI photos and videos"
-        ],
-        "featured": true
+        "cat": "Websites",
+        "name": "Multi-page website",
+        "price": "$1,000",
+        "unit": "",
+        "note": "",
+        "amount": 1000
       },
       {
-        "name": "Full Online Presence",
-        "for": "Website + content, all in one place",
-        "features": [
-          "Website design in one language or several",
-          "Launch content",
-          "Ongoing updates & support"
-        ],
-        "featured": false
+        "cat": "Websites",
+        "name": "Website support",
+        "price": "$50",
+        "unit": "/month",
+        "note": "Ongoing updates and support",
+        "amount": 50,
+        "unit_code": "MON"
+      },
+      {
+        "cat": "SEO",
+        "name": "SEO setup",
+        "price": "$200",
+        "unit": "",
+        "note": "Get found on Google",
+        "amount": 200
+      },
+      {
+        "cat": "Video editing",
+        "name": "4 videos",
+        "price": "$120",
+        "unit": "",
+        "note": "",
+        "amount": 120
+      },
+      {
+        "cat": "Video editing",
+        "name": "10 videos",
+        "price": "$250",
+        "unit": "",
+        "note": "",
+        "amount": 250,
+        "popular": true
+      },
+      {
+        "cat": "Video editing",
+        "name": "20 videos",
+        "price": "$450",
+        "unit": "",
+        "note": "",
+        "amount": 450
+      },
+      {
+        "cat": "Social media",
+        "name": "Social media management",
+        "price": "$300",
+        "unit": "/month",
+        "note": "Instagram, TikTok, X and YouTube",
+        "amount": 300,
+        "unit_code": "MON"
+      },
+      {
+        "cat": "Design",
+        "name": "Instagram carousels",
+        "price": "$40",
+        "unit": "each",
+        "note": "",
+        "amount": 40
+      },
+      {
+        "cat": "Design",
+        "name": "Logo design",
+        "price": "$150",
+        "unit": "",
+        "note": "",
+        "amount": 150
+      },
+      {
+        "cat": "AI",
+        "name": "AI photos & videos",
+        "price": "$100",
+        "unit": "per project",
+        "note": "",
+        "amount": 100
+      },
+      {
+        "cat": "AI",
+        "name": "Automation & AI assistants",
+        "price": "$300",
+        "unit": "",
+        "note": "Auto-replies, chatbots and smart workflows",
+        "amount": 300
       }
-    ],
-    "note": "[Placeholder packages — edit them to match your real offer.]"
+    ]
   },
   "process": {
     "kicker": "How it works",

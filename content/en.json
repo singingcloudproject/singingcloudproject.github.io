@@ -126,40 +126,66 @@
   "portfolio": {
     "kicker": "Portfolio",
     "title": "Selected work",
-    "intro": "A few recent projects. More coming soon.",
-    "placeholder_label": "Project image coming soon",
+    "intro": "Our first project is live — more coming soon.",
+    "placeholder_label": "[Photo placeholder — your next project]",
     "items": [
       {
-        "title": "Brother Nature — Instagram carousels",
-        "tag": "Hip hop artist · Instagram carousels",
-        "alt": "Instagram carousel designs for hip hop artist Brother Nature"
+        "title": "[Project title]",
+        "tag": "[Client · service]",
+        "alt": "[Photo placeholder — describe this project image]"
       },
       {
         "title": "[Project title]",
         "tag": "[Client · service]",
-        "alt": "[Describe this project image]"
+        "alt": "[Photo placeholder — describe this project image]"
       },
       {
         "title": "[Project title]",
         "tag": "[Client · service]",
-        "alt": "[Describe this project image]"
-      },
-      {
-        "title": "[Project title]",
-        "tag": "[Client · service]",
-        "alt": "[Describe this project image]"
-      },
-      {
-        "title": "[Project title]",
-        "tag": "[Client · service]",
-        "alt": "[Describe this project image]"
-      },
-      {
-        "title": "[Project title]",
-        "tag": "[Client · service]",
-        "alt": "[Describe this project image]"
+        "alt": "[Photo placeholder — describe this project image]"
       }
-    ]
+    ],
+    "featured": {
+      "kicker": "Featured project",
+      "label": "Instagram carousel series — Brother Nature",
+      "text": "Instagram carousels for hip hop artist Brother Nature, promoting his single “Together”.",
+      "facts": [
+        "Client: Brother Nature, hip hop artist",
+        "Service: Instagram carousels",
+        "3 carousels · 24 slides"
+      ],
+      "handle": "@brothernature626",
+      "handle_url": "https://www.instagram.com/brothernature626/",
+      "prev": "Previous slide",
+      "next": "Next slide",
+      "slide_word": "Slide",
+      "slides": [
+        {
+          "src": "assets/portfolio/brother-nature/slide-1.jpg",
+          "alt": "Carousel slide: Brother Nature singing into a microphone — “I almost gave up on music. Here's what kept me going”"
+        },
+        {
+          "src": "assets/portfolio/brother-nature/slide-2.jpg",
+          "alt": "Carousel slide: Brother Nature in sunglasses — “I left college to chase it. Everyone said I was crazy”"
+        },
+        {
+          "src": "assets/portfolio/brother-nature/slide-3.jpg",
+          "alt": "Carousel slide: Brother Nature performing on stage — “That's why I made ‘Together’. Out now, link in bio”"
+        },
+        {
+          "src": "assets/portfolio/brother-nature/slide-4.jpg",
+          "alt": "Carousel slide: Brother Nature in front of flowers — “This song is my truest message to you. Here's why”"
+        },
+        {
+          "src": "assets/portfolio/brother-nature/slide-5.jpg",
+          "alt": "Carousel slide: Brother Nature's silhouette under stage lights — “‘Together’ is for everyone who feels alone”"
+        },
+        {
+          "src": "assets/portfolio/brother-nature/slide-6.jpg",
+          "alt": "Carousel slide: Brother Nature singing — “5 signs you're waking up spiritually”"
+        }
+      ]
+    }
   },
   "packages": {
     "kicker": "Packages",

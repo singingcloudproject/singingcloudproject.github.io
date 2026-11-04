@@ -31,6 +31,40 @@
     });
   });
 
+
+  /* ---------- swipeable gallery (featured portfolio project) ----------
+     Swipe on phones, or use the arrows/dots. The browser does the smooth snapping, so it stays fast. */
+  document.querySelectorAll("[data-swiper]").forEach((sw) => {
+    const track = sw.querySelector(".swiper-track");
+    const slides = [...sw.querySelectorAll(".swiper-slide")];
+    const dots = [...sw.querySelectorAll(".swiper-dot")];
+    let current = 0;
+    const mark = (i) => { current = i; dots.forEach((d, k) => d.setAttribute("aria-current", String(k === i))); };
+    const go = (i) => {
+      const next = (i + slides.length) % slides.length;
+      mark(next);
+      track.scrollTo({ left: slides[next].offsetLeft - slides[0].offsetLeft, behavior: reduce ? "auto" : "smooth" });
+    };
+    mark(0);
+    sw.querySelectorAll(".swiper-btn").forEach((b) => b.addEventListener("click", () => go(current + +b.dataset.dir)));
+    dots.forEach((d, k) => d.addEventListener("click", () => go(k)));
+    track.addEventListener("keydown", (ev) => {
+      if (ev.key === "ArrowRight") { ev.preventDefault(); go(current + 1); }
+      if (ev.key === "ArrowLeft") { ev.preventDefault(); go(current - 1); }
+    });
+    // when the visitor swipes, light up the dot for the slide in view
+    let tick = false;
+    track.addEventListener("scroll", () => {
+      if (tick) return;
+      tick = true;
+      requestAnimationFrame(() => {
+        tick = false;
+        const i = Math.round(track.scrollLeft / track.clientWidth);
+        if (i !== current && i >= 0 && i < slides.length) mark(i);
+      });
+    }, { passive: true });
+  });
+
   /* ---------- footer year ---------- */
   document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
 

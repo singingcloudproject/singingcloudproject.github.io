@@ -216,15 +216,51 @@ def s_showreel(sec, t, ctx):
 </section>"""
 
 
+def featured_project(f, prefix):
+    """A real project with a swipeable slide gallery (swipe on phones, arrows/dots on computers).
+    The gallery always runs left-to-right, like Instagram, even on the Persian page."""
+    n = len(f["slides"])
+    slides = "".join(
+        f'<figure class="swiper-slide" role="group" aria-roledescription="slide" aria-label="{i} / {n}">'
+        f'<img src="{prefix}{e(s["src"])}" alt="{e(s["alt"])}" width="720" height="900" loading="lazy" decoding="async"></figure>'
+        for i, s in enumerate(f["slides"], 1))
+    dots = "".join(f'<button type="button" class="swiper-dot" aria-label="{e(f["slide_word"])} {i}"></button>'
+                   for i in range(1, n + 1))
+    facts = "".join(f"<li>{icon('check')}<span>{e(x)}</span></li>" for x in f.get("facts", []))
+    handle = (f'<a class="feature-handle" href="{e(f["handle_url"])}" target="_blank" rel="noopener">{e(f["handle"])}</a>'
+              if f.get("handle") else "")
+    return f"""
+    <article class="feature reveal">
+      <div class="swiper" dir="ltr" data-swiper>
+        <div class="swiper-track" tabindex="0" role="region" aria-roledescription="carousel" aria-label="{e(f["label"])}">{slides}</div>
+        <div class="swiper-ui">
+          <button type="button" class="swiper-btn" data-dir="-1" aria-label="{e(f["prev"])}">{icon("arrow-side", "icon flip")}</button>
+          <div class="swiper-dots">{dots}</div>
+          <button type="button" class="swiper-btn" data-dir="1" aria-label="{e(f["next"])}">{icon("arrow-side")}</button>
+        </div>
+      </div>
+      <div class="feature-text">
+        <p class="kicker">{e(f["kicker"])}</p>
+        <h3>{e(f["label"])}</h3>
+        <p class="feature-desc">{e(f["text"])}</p>
+        <ul class="points feature-facts">{facts}</ul>
+        {handle}
+      </div>
+    </article>"""
+
+
 def s_portfolio(sec, t, ctx):
+    feature = featured_project(t["featured"], ctx["prefix"]) if t.get("featured") else ""
     tiles = ""
     for i, it in enumerate(t["items"]):
         if it.get("image"):
             media = f'<img src="{ctx["prefix"]}{e(it["image"])}" alt="{e(it["alt"])}" loading="lazy" width="800" height="1000">'
         else:
+            # clearly marked space for a photo that will be added later
             media = placeholder(it["alt"], t["placeholder_label"], "image")
+        wide = "work-wide" if i == 0 and not feature else ""
         tiles += f"""
-      <figure class="work reveal {"work-wide" if i == 0 else ""}">
+      <figure class="work reveal {wide}">
         <div class="work-media"><div class="parallax-inner" data-parallax="0.08">{media}</div></div>
         <figcaption><h3>{e(it["title"])}</h3><p>{e(it.get("tag", ""))}</p></figcaption>
       </figure>"""
@@ -232,6 +268,7 @@ def s_portfolio(sec, t, ctx):
 <section class="section light" id="{e(sec["id"])}">
   <div class="container">
     {head_block(t)}
+    {feature}
     <div class="gallery" data-stagger>{tiles}
     </div>
   </div>

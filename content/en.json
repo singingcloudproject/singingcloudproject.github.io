@@ -21,11 +21,11 @@
     "skip": "Skip to content"
   },
   "hero": {
-    "eyebrow": "Creative digital studio",
-    "title": "Singing Cloud Studio",
-    "title_sub": "Websites, SEO and social media that help you grow",
-    "subtitle": "A creative studio for artists, clinics, coaches and small businesses: website design, SEO, Instagram and TikTok management, logos, AI photos & videos and smart automation — in English and Persian.",
-    "cta": "Get in touch",
+    "eyebrow": "Singing Cloud Studio",
+    "title": "We make your brand impossible to scroll past.",
+    "title_sub": "",
+    "subtitle": "Websites, videos and content that make people stop and look. For clients everywhere in the world, fully online.",
+    "cta": "Let's talk about your project",
     "secondary": "View services",
     "secondary_target": "services",
     "badges": [
@@ -336,6 +336,10 @@
       "not_connected": "The form isn't connected yet — please use WhatsApp for now.",
       "subject": "New enquiry — Singing Cloud Studio (EN)"
     }
+  },
+  "closing": {
+    "line": "Your business, beautifully online. Wherever you are.",
+    "cta": "Get in touch"
   },
   "footer": {
     "tagline": "Content, video and websites that help you grow.",

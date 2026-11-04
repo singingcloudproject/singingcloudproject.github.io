@@ -144,7 +144,7 @@ def s_hero(sec, t, ctx):
   <div class="container hero-grid">
     <div class="hero-copy">
       <p class="kicker reveal">{e(t.get("eyebrow", ""))}</p>
-      <h1 class="headline" aria-label="{e(t["title"])} — {e(t.get("title_sub", ""))}">
+      <h1 class="headline" aria-label="{e(" — ".join(x for x in (t["title"], t.get("title_sub", "")) if x))}">
         <span class="h1-main" aria-hidden="true">{main}</span>
         <span class="h1-sub" aria-hidden="true">{sub}</span>
       </h1>
@@ -348,6 +348,19 @@ def s_contact(sec, t, ctx):
 </section>"""
 
 
+
+def s_closing(sec, t, ctx):
+    """Closing line just above the footer, with a button to the contact form."""
+    return f"""
+<section class="section dark closing" id="{e(sec["id"])}">
+  <div class="hero-bg soft" aria-hidden="true"><span class="aurora a2"></span><span class="aurora a3"></span></div>
+  <div class="container narrow closing-inner">
+    <p class="closing-line reveal">{e(t["line"])}</p>
+    <a class="btn btn-gold reveal" href="#contact">{e(t["cta"])}</a>
+  </div>
+</section>"""
+
+
 RENDERERS = {
     "hero": s_hero,
     "cards": s_cards,
@@ -357,6 +370,7 @@ RENDERERS = {
     "steps": s_steps,
     "testimonials": s_testimonials,
     "contact": s_contact,
+    "closing": s_closing,
 }
 
 PERSIAN = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")

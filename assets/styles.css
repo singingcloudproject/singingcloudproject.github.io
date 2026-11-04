@@ -163,16 +163,17 @@ p { margin: 0 0 1em; }
 .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold); }
 
 .headline { margin-bottom: .45em; }
-.h1-main { display: block; font-size: clamp(2.6rem, 10vw, 5.2rem); color: #fff; }
+.h1-main { display: block; font-size: clamp(2.3rem, 7.4vw, 4.3rem); line-height: 1.08; color: #fff; }
 .h1-sub { display: block; margin-top: .3em; font-size: clamp(1.25rem, 4.4vw, 2.15rem); font-weight: 700; letter-spacing: -.015em; line-height: 1.25; }
-[lang="fa"] .h1-main { font-size: clamp(2.2rem, 8.5vw, 4.2rem); }
+[lang="fa"] .h1-main { font-size: clamp(1.9rem, 6.6vw, 3.4rem); line-height: 1.5; }
+.h1-sub:empty { display: none; }
 [lang="fa"] .h1-sub { line-height: 1.6; }
 .h1-sub .w > span { background: linear-gradient(90deg, var(--sky-2), var(--sky) 45%, var(--gold-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 /* word-by-word reveal */
 .w { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: .1em; margin-bottom: -.1em; }
 .w > span { display: inline-block; transform: translateY(105%); animation: word-up .9s var(--ease) forwards; animation-delay: calc(var(--i) * 85ms + 350ms); }
 @keyframes word-up { to { transform: none; } }
-.hero .lead { font-size: 1.1rem; max-width: 560px; margin-inline: auto; }
+.hero .lead { font-size: 1.22rem; line-height: 1.6; max-width: 580px; margin-inline: auto; color: #c9d5ee; }
 @media (min-width: 900px) { .hero .lead { margin-inline: 0; } }
 .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 30px 0 30px; }
 @media (min-width: 900px) { .hero-actions { justify-content: flex-start; } }
@@ -401,3 +402,10 @@ p { margin: 0 0 1em; }
 .form-thanks-icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%;
   font-size: 30px; font-weight: 800; color: #7ee2a8; background: rgba(126, 226, 168, .12); border: 2px solid #7ee2a8; }
 .dark .form-thanks p { color: #fff; }
+
+/* ---------- closing line above the footer ---------- */
+.closing { text-align: center; border-top: 1px solid rgba(191, 227, 255, .08); }
+.closing-inner { display: grid; justify-items: center; gap: 30px; }
+.closing-line { margin: 0; font: 800 clamp(1.9rem, 5.6vw, 3.2rem)/1.2 var(--font-head); letter-spacing: -.02em;
+  background: linear-gradient(90deg, #fff 10%, var(--sky-2) 55%, var(--gold-2)); -webkit-background-clip: text; background-clip: text; color: transparent !important; }
+[lang="fa"] .closing-line { line-height: 1.6; letter-spacing: 0; }

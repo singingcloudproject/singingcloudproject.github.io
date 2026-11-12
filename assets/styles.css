@@ -85,8 +85,9 @@ p { margin: 0 0 1em; }
 .btn-glass:hover { border-color: var(--sky); box-shadow: 0 0 30px -6px rgba(142, 203, 255, .55); }
 .btn-outline { background: var(--white); border-color: #cfe0f5; color: var(--ink); }
 .btn-outline:hover { border-color: var(--sky-deep); box-shadow: 0 12px 30px -14px rgba(47, 134, 220, .55); }
-.btn-whatsapp { background: #1faf5d; color: #fff; box-shadow: 0 10px 30px -12px rgba(31, 175, 93, .8); }
-.btn-whatsapp:hover { box-shadow: 0 16px 44px -10px rgba(31, 175, 93, .9), 0 0 0 4px rgba(31, 175, 93, .18); }
+.btn-instagram { background: #fff; color: var(--night); box-shadow: 0 10px 30px -12px rgba(255, 255, 255, .45); }
+.btn-instagram:hover { box-shadow: 0 16px 44px -10px rgba(252, 1, 216, .45), 0 0 0 4px rgba(255, 255, 255, .15); }
+.ig-logo { width: 22px; height: 22px; object-fit: contain; flex: none; }
 .btn-sm { padding: 10px 18px; font-size: .85rem; }
 
 /* ---------- header (dark glass) ---------- */

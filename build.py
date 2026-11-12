@@ -3,7 +3,7 @@
 Page builder for the Singing Cloud Studio website.
 
 It reads:
-  content/site.json      -> settings (website address, WhatsApp number, Formspree ID,
+  content/site.json      -> settings (website address, Instagram handle, Formspree ID,
                             languages, section order, photo/video files)
   content/<lang>.json    -> all the words on the page, one file per language
 
@@ -352,7 +352,7 @@ def s_testimonials(sec, t, ctx):
 def s_contact(sec, t, ctx):
     cfg = ctx["site"]
     f = t["form"]
-    wa = f'https://wa.me/{cfg["whatsapp_number"]}?text={urllib.parse.quote(t["whatsapp_text"])}'
+    ig = f'https://ig.me/m/{cfg["instagram_handle"]}'
     options = "".join(f"<option>{e(o)}</option>" for o in f["topic_options"])
     connected = "YOUR_" not in cfg["formspree_id"]
     return f"""
@@ -363,8 +363,8 @@ def s_contact(sec, t, ctx):
       <p class="kicker reveal">{e(t["kicker"])}</p>
       <h2 class="reveal">{e(t["title"])}</h2>
       <p class="lead reveal">{e(t["intro"])}</p>
-      <a class="btn btn-whatsapp reveal" href="{e(wa)}" target="_blank" rel="noopener">{icon("whatsapp")}{e(t["whatsapp_btn"])}</a>
-      <p class="small reveal">{e(t.get("whatsapp_note", ""))}</p>
+      <a class="btn btn-instagram reveal" href="{e(ig)}" target="_blank" rel="noopener"><img class="ig-logo" src="{ctx["prefix"]}assets/icons/color/instagram.svg" alt="" width="22" height="22" decoding="async">{e(t["instagram_btn"])}</a>
+      <p class="small reveal">{e(t.get("instagram_note", ""))}</p>
     </div>
     <form class="form reveal-right" action="https://formspree.io/f/{e(cfg["formspree_id"])}" method="POST"
           data-connected="{str(connected).lower()}" data-sending="{e(f["sending"])}" data-success="{e(f["success"])}"

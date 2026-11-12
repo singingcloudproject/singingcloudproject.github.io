@@ -336,14 +336,13 @@
     "kicker": "Contact",
     "title": "Let's create something beautiful",
     "intro": "Tell me about your project. The first chat is free, and I usually reply within one day.",
-    "whatsapp_btn": "Chat on WhatsApp",
-    "whatsapp_text": "Hello Singing Cloud Studio! I'd like to talk about a project.",
-    "whatsapp_note": "WhatsApp Business · replies in English or Persian",
+    "instagram_btn": "Message us on Instagram",
+    "instagram_note": "@singingcloudstudio · replies in English or Persian",
     "or": "Or send a message",
     "form": {
       "name": "Your name",
       "email": "Email",
-      "phone": "WhatsApp / Telegram (optional)",
+      "phone": "Phone or Telegram (optional)",
       "topic": "What do you need?",
       "topic_options": [
         "Websites",
@@ -358,8 +357,8 @@
       "send": "Send message",
       "sending": "Sending…",
       "success": "Thank you! Your message has been sent. I'll be in touch soon.",
-      "error": "Sorry, something went wrong. Please try again or message me on WhatsApp.",
-      "not_connected": "The form isn't connected yet — please use WhatsApp for now.",
+      "error": "Sorry, something went wrong. Please try again or message us on Instagram.",
+      "not_connected": "The form isn't connected yet — please message us on Instagram for now.",
       "subject": "New enquiry — Singing Cloud Studio (EN)"
     }
   },

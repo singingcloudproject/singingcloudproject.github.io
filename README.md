@@ -1,14 +1,13 @@
 # Singing Cloud Studio — website
 
-A one-page website in English (main) and Persian (right-to-left). Armenian can be added later.
-Nothing has been uploaded yet — it all lives in this folder on your computer.
+A one-page website in English only. It is online at https://singingcloudproject.github.io/ (hidden from Google with "noindex").
 
 ## What's in this folder
 
 | File / folder | What it is | Do you edit it? |
 |---|---|---|
-| `content/en.json`, `fa.json` | **All the words on the site**, one file per language | ✅ Yes — this is where you change text |
-| `content/site.json` | Settings: WhatsApp number, Formspree form ID, website address, languages | ✅ Yes |
+| `content/en.json` | **All the words on the site** | ✅ Yes — this is where you change text |
+| `content/site.json` | Settings: Instagram handle, Formspree form ID, website address, language | ✅ Yes |
 | `assets/styles.css` | The look: colours, fonts, animations | Only if you want to change the design |
 | `assets/script.js` | The motion: starry sky, scroll animations, counting numbers, parallax, sending the form | No |
 | `logo.png` | Your 3D cloud logo, converted to a real PNG (original background kept) | No |
@@ -17,12 +16,12 @@ Nothing has been uploaded yet — it all lives in this folder on your computer.
 | `assets/icons/color/` | The brands' official full-colour logo files that orbit the cloud | No |
 | `assets/favicon-32.png`, `favicon-180.png` | The browser-tab icon and the phone home-screen icon | No |
 | `build.py` | The "page builder": turns the text files into web pages | No |
-| `index.html`, `fa/index.html` | The finished pages (made by `build.py`) | ❌ No — they get overwritten |
-| `sitemap.xml`, `robots.txt` | Help Google find all three languages | No (made by `build.py`) |
+| `index.html` | The finished page (made by `build.py`) | ❌ No — they get overwritten |
+| `sitemap.xml`, `robots.txt` | Help Google find the page | No (made by `build.py`) |
 
 ## How to change text
 
-1. Open `content/en.json` (or `fa.json`) in Notepad or VS Code.
+1. Open `content/en.json` in Notepad or VS Code.
 2. Change only the words **inside the quotes on the right side**, e.g.
    `"title": "What I create for you"` → `"title": "What I make for you"`.
    Keep the quotes, commas and brackets exactly as they are.
@@ -35,15 +34,12 @@ Nothing has been uploaded yet — it all lives in this folder on your computer.
 4. Double-click `index.html` to see the result in your browser.
 
 Anything in `[square brackets]` is a placeholder for you to replace.
-The Persian text is a **draft translation — please check it**.
 
-The language buttons link straight to each page's `index.html` file (e.g. `fa/index.html`), so switching languages works when you open the site by double-clicking, as well as once it's online.
+## Settings (`content/site.json`)
 
-## Things to fill in before going live (`content/site.json`)
-
-- **`whatsapp_number`** — your WhatsApp Business number, digits only with country code, no `+` or spaces (e.g. `374XXXXXXXX`).
-- **`formspree_id`** — create a free form at formspree.io; it gives you an address like `https://formspree.io/f/abcdwxyz`. Put just the last part (`abcdwxyz`) here. Until then, the form politely tells visitors to use WhatsApp.
-- **`site_url`** — your real web address once you have one (used by Google).
+- **`instagram_handle`** — the account the "Message us on Instagram" button opens (now `singingcloudstudio`).
+- **`formspree_id`** — the contact form's Formspree ID (now connected).
+- **`noindex`** — `true` keeps the site hidden from Google; set `false` when the site is final.
 
 ## Adding your showreel video
 
@@ -53,18 +49,18 @@ Either:
 
 ## Changing the counting numbers
 
-In each language file, under `"showreel"` → `"stats"`, change `"value"` (must be a plain number, e.g. `50`) and `"suffix"` (e.g. `"+"`). The numbers count up from 0 when a visitor scrolls to them. In Persian they appear with Persian digits automatically.
+In `content/en.json`, under `"showreel"` → `"stats"`, change `"value"` (must be a plain number, e.g. `50`) and `"suffix"` (e.g. `"+"`). The numbers count up from 0 when a visitor scrolls to them.
 
 ## Packages
 
-Under `"packages"` in each language file. There are no prices or payments on the site — the buttons say "Ask for a quote" and jump to the contact form. `"featured": true` makes a package the dark, highlighted "Most popular" one.
+Under `"packages"` in `content/en.json`. There are no prices or payments on the site — the buttons say "Ask for a quote" and jump to the contact form. `"featured": true` makes a package the dark, highlighted "Most popular" one.
 
 ## Adding portfolio images
 
 1. Make a folder called `images` here and put your picture in it, e.g. `images/brother-nature.jpg`.
-2. In each language file, find the portfolio item and add an `"image"` line:
+2. In `content/en.json`, find the portfolio item and add an `"image"` line:
    `{ "title": "...", "tag": "...", "alt": "...", "image": "images/brother-nature.jpg" }`
-3. Write a good `alt` (a short description of the picture) in each language — it helps Google and blind visitors.
+3. Write a good `alt` (a short description of the picture) — it helps Google and blind visitors.
 4. Run `python build.py`.
 
 The testimonial has a round space for the client's photo: add `"photo": "images/client.jpg"` next to `"photo_alt"`.
@@ -89,9 +85,6 @@ The cloud itself is only about 250 px wide, so it can look slightly soft on larg
 
 The orbiting logos are the brands' official full-colour logo files, collected from the open [logos](https://github.com/gilbarbara/logos) set (CC0); the current Instagram gradient logo comes from [svgl](https://svgl.app). They are shown unchanged — no recolouring, reshaping or stretching. The logos are trademarks of their owners.
 
-## Adding Armenian later
+## Languages
 
-1. Copy `content/en.json` to `content/hy.json` and translate it.
-2. In `content/site.json`, change Armenian's `"enabled": false` to `"enabled": true`.
-3. Run `python build.py` — a new `hy/` page appears and the language switcher shows ՀՅ.
-   (The fonts already used support Armenian letters only partly; ask Claude to add an Armenian font at that point.)
+The Studio site is **English only**.

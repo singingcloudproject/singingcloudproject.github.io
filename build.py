@@ -8,9 +8,7 @@ It reads:
   content/<lang>.json    -> all the words on the page, one file per language
 
 and writes the finished pages:
-  index.html             -> English (main language)
-  fa/index.html          -> Persian (right-to-left)
-  ru/index.html          -> Russian
+  index.html             -> English (the only language)
   sitemap.xml, robots.txt
 
 Run it after every change:   python build.py
@@ -218,7 +216,7 @@ def s_showreel(sec, t, ctx):
 
 def featured_project(f, prefix):
     """A real project with a swipeable slide gallery (swipe on phones, arrows/dots on computers).
-    The gallery always runs left-to-right, like Instagram, even on the Persian page."""
+    The gallery runs left-to-right, like Instagram."""
     n = len(f["slides"])
     slides = "".join(
         f'<figure class="swiper-slide" role="group" aria-roledescription="slide" aria-label="{i} / {n}">'
@@ -410,13 +408,12 @@ RENDERERS = {
     "closing": s_closing,
 }
 
-PERSIAN = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
 LATIN = str.maketrans("", "")
 
 
 # ---------------------------------------------------------------- page
-OG_LOCALES = {"en": "en_US", "fa": "fa_IR", "ru": "ru_RU", "hy": "hy_AM"}
-LANG_NAMES = {"en": "English", "fa": "Persian", "ru": "Russian", "hy": "Armenian"}
+OG_LOCALES = {"en": "en_US", "ru": "ru_RU", "hy": "hy_AM"}
+LANG_NAMES = {"en": "English", "ru": "Russian", "hy": "Armenian"}
 
 
 def build_schema(site, lang, t, langs, base, url):
@@ -462,7 +459,7 @@ def page(site, lang, t, langs):
     prefix = "../" * lang["path"].count("/")
     base = site["site_url"].rstrip("/") + "/"
     url = base + lang["path"]
-    ctx = {"site": site, "lang": lang, "prefix": prefix, "digits": PERSIAN if lang["code"] == "fa" else LATIN}
+    ctx = {"site": site, "lang": lang, "prefix": prefix, "digits": LATIN}
 
     nav_links = "".join(f'<li><a href="#{e(sid)}">{e(label)}</a></li>' for sid, label in t["nav"]["links"].items())
     switch = "".join(
@@ -471,6 +468,8 @@ def page(site, lang, t, langs):
         + f'>{e(l["label"])}</a>'
         for l in langs
     )
+    if len(langs) < 2:
+        switch = ""
     alternates = "\n".join(f'  <link rel="alternate" hreflang="{l["code"]}" href="{base}{l["path"]}">' for l in langs)
     alternates += f'\n  <link rel="alternate" hreflang="x-default" href="{base}">'
 
@@ -482,7 +481,7 @@ def page(site, lang, t, langs):
     og_alt_locales = "".join(f'  <meta property="og:locale:alternate" content="{OG_LOCALES[l["code"]]}">\n'
                              for l in langs if l["code"] != lang["code"])
     fonts = ("https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800"
-             "&family=Inter:wght@400;500;600&family=Vazirmatn:wght@400;500;700;800&display=swap")
+             "&family=Inter:wght@400;500;600&display=swap")
     return f"""<!doctype html>
 <html lang="{lang["code"]}" dir="{lang["dir"]}">
 <head>
@@ -524,7 +523,7 @@ def page(site, lang, t, langs):
       <ul>{nav_links}</ul>
     </nav>
     <div class="header-actions">
-      <div class="lang-switch" role="navigation" aria-label="{e(t["nav"]["language"])}">{switch}</div>
+      {f'<div class="lang-switch" role="navigation" aria-label="{e(t["nav"]["language"])}">{switch}</div>' if switch else ""}
       <a class="btn btn-gold btn-sm header-cta" href="#contact">{e(t["nav"]["cta"])}</a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="{e(t["nav"]["menu"])}"><span></span><span></span></button>
     </div>
@@ -536,7 +535,7 @@ def page(site, lang, t, langs):
   <div class="container footer-inner">
     <a class="brand" href="#top">{logo(prefix)}<span>{e(site["brand"])}</span></a>
     <p>{e(t["footer"]["tagline"])}</p>
-    <div class="lang-switch">{switch}</div>
+    {f'<div class="lang-switch">{switch}</div>' if switch else ""}
     <p class="small">© <span data-year></span> {e(site["brand"])}. {e(t["footer"]["rights"])}</p>
   </div>
 </footer>

@@ -16,13 +16,6 @@
       "enabled": true
     },
     {
-      "code": "fa",
-      "dir": "rtl",
-      "path": "fa/",
-      "label": "فا",
-      "enabled": true
-    },
-    {
       "code": "hy",
       "dir": "ltr",
       "path": "hy/",

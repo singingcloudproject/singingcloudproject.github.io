@@ -31,7 +31,7 @@
     "badges": [
       "Free first chat",
       "Personal, one-to-one service",
-      "English · Persian"
+      "Fully online, worldwide"
     ],
     "logo_alt": "Singing Cloud Studio logo: a glossy blue cloud singing"
   },
@@ -108,11 +108,6 @@
         "value": 6,
         "suffix": "",
         "label": "services"
-      },
-      {
-        "value": 2,
-        "suffix": "",
-        "label": "languages"
       },
       {
         "value": 24,
@@ -337,7 +332,7 @@
     "title": "Let's create something beautiful",
     "intro": "Tell me about your project. The first chat is free, and I usually reply within one day.",
     "instagram_btn": "Message us on Instagram",
-    "instagram_note": "@singingcloudstudio · replies in English or Persian",
+    "instagram_note": "@singingcloudstudio · we usually reply within one day",
     "or": "Or send a message",
     "form": {
       "name": "Your name",

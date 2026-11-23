@@ -1,0 +1,95 @@
+@import 'tailwindcss';
+
+/* ── Brand tokens: Midnight sky studio ───────────────────────── */
+@theme {
+  --color-night: #070b1f;      /* page background */
+  --color-deep: #0d1433;       /* raised surfaces */
+  --color-panel: #121a40;      /* cards */
+  --color-line: #24305e;       /* hairlines */
+  --color-ink: #eef2ff;        /* main text */
+  --color-mute: #a3add6;       /* secondary text (AA on night) */
+  --color-sky: #8fd3ff;        /* glowing cloud blue, the accent */
+  --color-sky-deep: #3b9bff;
+  --color-gold: #e7c27d;       /* soft gold touches */
+
+  --font-display: 'Instrument Serif', 'Times New Roman', serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-soft: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+html { background: var(--color-night); color-scheme: dark; -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body {
+  margin: 0; background: var(--color-night); color: var(--color-ink);
+  font-family: var(--font-sans); font-size: 16px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased; overflow-x: clip;
+}
+::selection { background: var(--color-sky); color: var(--color-night); }
+@layer base {
+  img, video { max-width: 100%; display: block; }
+  a { color: inherit; }
+}
+
+/* Focus: crisp and visible */
+:focus-visible { outline: 2px solid var(--color-sky); outline-offset: 3px; border-radius: 6px; }
+
+@layer components {
+/* Shared building blocks */
+.wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: 20px; }
+@media (min-width: 768px) { .wrap { padding-inline: 40px; } }
+
+.display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; line-height: 1.02; }
+.kicker { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-gold); font-weight: 600; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 22px; border-radius: 999px; font-weight: 600; font-size: 15px;
+  text-decoration: none; white-space: nowrap; cursor: pointer; border: 1px solid transparent;
+  transition: transform 160ms var(--ease-out-soft), background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary {
+  background: linear-gradient(180deg, #b6e3ff, var(--color-sky)); color: #06122e;
+  box-shadow: 0 0 0 1px rgba(143, 211, 255, 0.4), 0 10px 40px -10px rgba(143, 211, 255, 0.7);
+}
+.btn-ghost { border-color: rgba(238, 242, 255, 0.22); color: var(--color-ink); background: rgba(13, 20, 51, 0.5); backdrop-filter: blur(10px); }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { box-shadow: 0 0 0 1px rgba(143, 211, 255, 0.6), 0 14px 50px -8px rgba(143, 211, 255, 0.9); transform: translateY(-1px); }
+  .btn-ghost:hover { border-color: rgba(238, 242, 255, 0.5); }
+  .lift { transition: transform 220ms var(--ease-out-soft); }
+  .lift:hover { transform: translateY(-2px); }
+  .zoom img, .zoom video { transition: transform 600ms var(--ease-out-soft); }
+  .zoom:hover img, .zoom:hover video { transform: scale(1.03); }
+}
+
+.glass { background: rgba(13, 20, 51, 0.55); border: 1px solid rgba(143, 211, 255, 0.14); backdrop-filter: blur(14px); }
+.hairline { border-color: var(--color-line); }
+
+/* Soft star field used behind non-3D sections */
+.starfield {
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,.7), transparent 60%),
+    radial-gradient(1px 1px at 72% 12%, rgba(255,255,255,.5), transparent 60%),
+    radial-gradient(1.5px 1.5px at 40% 70%, rgba(190,225,255,.6), transparent 60%),
+    radial-gradient(1px 1px at 88% 60%, rgba(255,255,255,.5), transparent 60%),
+    radial-gradient(1px 1px at 25% 85%, rgba(255,255,255,.4), transparent 60%);
+}
+
+}
+
+/* Hotspot pulse (3D labels) */
+@keyframes pulse-ring { 0% { transform: scale(0.9); opacity: 0.8 } 100% { transform: scale(2.2); opacity: 0 } }
+.pulse::before, .pulse::after {
+  content: ''; position: absolute; inset: 0; border-radius: 999px; border: 2px solid var(--color-sky);
+  animation: pulse-ring 2.6s var(--ease-out-soft) infinite;
+}
+.pulse::after { animation-delay: 1.3s; }
+
+/* Phone mockup scroll preview */
+@keyframes page-scroll { 0%, 8% { transform: translateY(0) } 92%, 100% { transform: translateY(calc(-100% + var(--frame-h))) } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .pulse::before, .pulse::after { display: none; }
+}

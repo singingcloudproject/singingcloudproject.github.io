@@ -1,0 +1,28 @@
+import puppeteer from 'puppeteer-core'
+const OUT = process.argv[2]
+const b = await puppeteer.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', args: ['--autoplay-policy=no-user-gesture-required', '--ignore-gpu-blocklist'] })
+const wait = (ms) => new Promise((r) => setTimeout(r, ms))
+const p = await b.newPage()
+p.on('pageerror', (e) => console.log('page error:', e.message))
+p.on('console', (m) => m.type() === 'error' && console.log('console error:', m.text()))
+await p.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true })
+await p.goto('http://127.0.0.1:5174/', { waitUntil: 'networkidle2' })
+await wait(8000)
+const labels = await p.$$eval('button[aria-label^="Open "]', (els) => els.map((e) => e.getAttribute('aria-label')))
+console.log('hotspots:', labels)
+await p.evaluate(() => [...document.querySelectorAll('button[aria-label="Open Websites"]')][0]?.click())
+await wait(900); await p.screenshot({ path: `${OUT}/fly-mid.jpg`, type: 'jpeg', quality: 70 })
+await wait(2500)
+console.log('after hotspot url:', p.url())
+await p.screenshot({ path: `${OUT}/svc-websites.jpg`, type: 'jpeg', quality: 70 })
+// lightbox
+await p.goto('http://127.0.0.1:5174/work', { waitUntil: 'networkidle2' }); await wait(1500)
+await p.evaluate(() => [...document.querySelectorAll('button[aria-label*="carousel"], button[aria-label*="Moonlight"]')][0]?.click())
+await wait(1200); await p.screenshot({ path: `${OUT}/lightbox.jpg`, type: 'jpeg', quality: 70 })
+console.log('dialog open:', await p.$('[role=dialog]') ? 'yes' : 'no')
+// reduced motion -> still hero
+await p.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }])
+await p.goto('http://127.0.0.1:5174/', { waitUntil: 'networkidle2' }); await wait(1500)
+await p.screenshot({ path: `${OUT}/reduced.jpg`, type: 'jpeg', quality: 70 })
+console.log('canvas on reduced:', await p.$('canvas') ? 'yes' : 'no')
+await b.close()

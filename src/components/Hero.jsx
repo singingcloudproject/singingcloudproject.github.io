@@ -1,147 +1,113 @@
-import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { SERVICES } from '../data/services.js'
-import { canRun3D, prefersReducedMotion, isTouch } from '../lib/device.js'
 import { EASE } from '../lib/motion.js'
 
-const Studio = lazy(() => import('../three/Studio.jsx'))
-const INTRO_KEY = 'scs-intro-seen'
+/* Hero videos live in public/media/hero/ (made by `npm run hero` from media-source/hero/). */
+const HERO = '/media/hero/hero-'
+const TALL = '(max-aspect-ratio: 1/1)' // phones held upright, tall tablets → 9:16 video
+const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches
+const saveData = () => Boolean(navigator.connection?.saveData)
 
-function readSeen() { try { return localStorage.getItem(INTRO_KEY) === '1' } catch { return false } }
-function writeSeen() { try { localStorage.setItem(INTRO_KEY, '1') } catch { /* private mode */ } }
+function useMedia(query) {
+  const [match, setMatch] = useState(() => matchMedia(query).matches)
+  useEffect(() => {
+    const m = matchMedia(query)
+    const on = () => setMatch(m.matches)
+    on() // the screen may have changed shape before this ran
+    // older iPhones (iOS 13 and earlier) only know addListener
+    if (m.addEventListener) m.addEventListener('change', on); else m.addListener(on)
+    return () => (m.removeEventListener ? m.removeEventListener('change', on) : m.removeListener(on))
+  }, [query])
+  return match
+}
 
-/* Lightweight hero for phones without WebGL, save-data, or reduce-motion */
-function StillHero() {
+function HeroVideo() {
+  const tall = useMedia(TALL)
+  const still = useMedia('(prefers-reduced-motion: reduce)') || saveData()
+  const name = tall ? 'portrait' : 'landscape'
+  const video = useRef()
+  const [playing, setPlaying] = useState(false)
+
+  useEffect(() => {
+    const v = video.current
+    if (!v) return
+    setPlaying(false)
+    // iPhones only autoplay when muted is set as a property before play()
+    v.muted = true; v.defaultMuted = true; v.playsInline = true
+    const tryPlay = () => v.play()?.catch(() => { /* Low Power Mode or blocked: the poster stays */ })
+    tryPlay()
+    // Low Power Mode blocks autoplay until the visitor touches the page once
+    const kick = () => { if (v.paused) tryPlay() }
+    window.addEventListener('touchstart', kick, { passive: true, once: true })
+    // pause when scrolled away or the tab is hidden (saves battery and data)
+    const io = new IntersectionObserver(([e]) => (e.isIntersecting && !document.hidden ? tryPlay() : v.pause()), { threshold: 0.05 })
+    io.observe(v)
+    const vis = () => (document.hidden ? v.pause() : tryPlay())
+    document.addEventListener('visibilitychange', vis)
+    return () => { io.disconnect(); document.removeEventListener('visibilitychange', vis); window.removeEventListener('touchstart', kick) }
+  }, [name, still])
+
   return (
-    <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-      <img src="/media/hero-poster.webp" alt="" className="h-full w-full object-cover opacity-90" fetchPriority="high" onError={(e) => { e.currentTarget.style.display = 'none' }} />
-      <div className="starfield absolute inset-0 opacity-70" />
-      <img src="/media/logo/cloud-640.webp" alt="" className="absolute left-1/2 top-[18%] w-[62vw] max-w-[420px] -translate-x-1/2 drop-shadow-[0_0_60px_rgba(143,211,255,0.45)]" />
+    <div className="hero-drift absolute inset-0" aria-hidden="true">
+      {/* Poster shows instantly, and stays if video can't play */}
+      <picture>
+        <source media={TALL} srcSet={`${HERO}portrait.jpg`} />
+        <img src={`${HERO}landscape.jpg`} alt="" fetchPriority="high" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+      </picture>
+      {!still && (
+        <video key={name} ref={video} className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${playing ? 'opacity-100' : 'opacity-0'}`}
+          autoPlay muted loop playsInline preload="auto" poster={`${HERO}${name}.jpg`}
+          disablePictureInPicture disableRemotePlayback onPlaying={() => setPlaying(true)}>
+          <source src={`${HERO}${name}.webm`} type='video/webm; codecs="vp9"' />
+          <source src={`${HERO}${name}.mp4`} type="video/mp4" />
+        </video>
+      )}
     </div>
   )
 }
 
 export default function Hero() {
-  const navigate = useNavigate()
-  const [mode] = useState(() => (canRun3D() && !prefersReducedMotion() ? '3d' : 'still'))
-  const [skipIntro] = useState(readSeen)
-  const [introDone, setIntroDone] = useState(skipIntro)
-  const [ready, setReady] = useState(false)
-  const [active, setActive] = useState(true)
-  const [leaving, setLeaving] = useState(false)
-  const [gyro, setGyro] = useState('off') // off | on | unsupported
-  const lookRef = useRef({ yaw: 0, pitch: 0, smoothYaw: 0, smoothPitch: 0, userMoved: false })
-  const section = useRef()
-
-  // Pause the 3D world when the hero is scrolled away or the tab is hidden (saves battery)
-  useEffect(() => {
-    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting && !document.hidden), { threshold: 0.02 })
-    if (section.current) io.observe(section.current)
-    const vis = () => setActive(!document.hidden && section.current?.getBoundingClientRect().bottom > 0)
-    document.addEventListener('visibilitychange', vis)
-    return () => { io.disconnect(); document.removeEventListener('visibilitychange', vis) }
-  }, [])
-
-  useEffect(() => {
-    if (mode === '3d' && isTouch() && typeof DeviceOrientationEvent === 'undefined') setGyro('unsupported')
-  }, [mode])
-
-  const onIntroDone = useCallback(() => { setIntroDone(true); writeSeen() }, [])
-
-  const onSelect = useCallback((s) => {
-    setLeaving(true)
-    setTimeout(() => navigate(`/services/${s.slug}`), 380)
-  }, [navigate])
-
-  async function turnOnGyro() {
-    try {
-      if (typeof DeviceOrientationEvent?.requestPermission === 'function') {
-        const res = await DeviceOrientationEvent.requestPermission() // iPhone asks the visitor
-        if (res !== 'granted') { setGyro('unsupported'); return }
-      }
-      const { enableGyro } = await import('../three/Studio.jsx')
-      enableGyro(lookRef)
-      lookRef.current.userMoved = true
-      setGyro('on')
-    } catch { setGyro('unsupported') }
-  }
-
-  const skipToServices = () => document.getElementById('services')?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth' })
-  const showUI = mode === 'still' || introDone
+  const skipToServices = () => document.getElementById('services')?.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth' })
 
   return (
-    <section ref={section} className="relative h-[100svh] min-h-[600px] w-full overflow-hidden bg-night" aria-label="Step into the Cloud Studio">
-      {mode === '3d' ? (
-        <Suspense fallback={null}>
-          <Studio onSelect={onSelect} skipIntro={skipIntro} onIntroDone={onIntroDone} lookRef={lookRef} active={active} onReady={() => setReady(true)} />
-        </Suspense>
-      ) : <StillHero />}
+    <section className="relative h-[100svh] min-h-[600px] w-full overflow-hidden bg-night" aria-label="Step into the Cloud Studio">
+      <HeroVideo />
 
-      {/* Loading veil: soft night gradient until the 3D world is ready */}
-      <AnimatePresence>
-        {mode === '3d' && !ready && (
-          <motion.div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-night" exit={{ opacity: 0 }} transition={{ duration: 0.8 }}>
-            <img src="/media/logo/cloud-640.webp" alt="" className="w-40 animate-pulse opacity-80" />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Readability gradients */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-night via-night/70 to-transparent" />
+      {/* Readability: overall dim + darker bottom where the words sit */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-night/25" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-night via-night/70 to-transparent" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-night/80 to-transparent" />
 
       {/* Words + actions */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 pb-[104px] md:pb-14">
+      <div className="absolute inset-x-0 bottom-0 pb-[104px] md:pb-14">
         <div className="wrap">
-          <motion.p className="kicker" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: skipIntro ? 0.2 : 1.2, duration: 0.8, ease: EASE }}>
+          <motion.p className="kicker" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8, ease: EASE }}>
             Singing Cloud Project
           </motion.p>
-          <h1 className="display mt-2 max-w-[14ch] text-[clamp(40px,10.5vw,104px)] sm:mt-3">
+          <h1 className="display mt-2 max-w-[14ch] text-[clamp(40px,10.5vw,104px)] [text-shadow:0_2px_30px_rgba(7,11,31,0.6)] sm:mt-3">
             {['Step', 'into', 'the', 'Cloud', 'Studio.'].map((w, i) => (
               <motion.span key={i} className={`mr-[0.22em] inline-block ${i >= 3 ? 'italic text-sky' : ''}`}
                 initial={{ opacity: 0, y: '0.5em', filter: 'blur(10px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{ delay: (skipIntro ? 0.25 : 1.5) + i * 0.09, duration: 0.9, ease: EASE }}>{w}</motion.span>
+                transition={{ delay: 0.3 + i * 0.09, duration: 0.9, ease: EASE }}>{w}</motion.span>
             ))}
           </h1>
-          <motion.p className="mt-3 max-w-[36ch] text-[16px] leading-snug text-mute sm:mt-4 sm:text-lg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: skipIntro ? 0.7 : 2.3, duration: 0.9 }}>
+          <motion.p className="mt-3 max-w-[36ch] text-[16px] leading-snug text-mute sm:mt-4 sm:text-lg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8, duration: 0.9 }}>
             AI visuals, websites and content that make your brand impossible to ignore.
           </motion.p>
 
-          <AnimatePresence>
-            {showUI && (
-              <motion.div className="pointer-events-auto mt-6 flex flex-wrap items-center gap-3" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: EASE }}>
-                <Link to="/contact" className="btn btn-primary hidden md:inline-flex">Start your project</Link>
-                <button type="button" onClick={skipToServices} className="btn btn-ghost !min-h-[44px] !px-4 text-sm sm:!px-5 sm:text-[15px]">Skip to services <span aria-hidden="true">↓</span></button>
-                {mode === '3d' && isTouch() && gyro === 'off' && (
-                  <button type="button" onClick={turnOnGyro} className="btn btn-ghost !min-h-[44px] !px-4 text-sm">Tilt to look</button>
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-          {mode === '3d' && showUI && (
-            <motion.p className="mt-4 text-[13px] text-mute/90 sm:mt-5 sm:text-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
-              {isTouch() ? 'Swipe to look around' : 'Drag to look around'} · tap a glowing light to step inside
-            </motion.p>
-          )}
-          {/* For the still version (and screen readers): the five doors as plain links */}
-          <ul className={`pointer-events-auto mt-5 flex flex-wrap gap-2 ${mode === '3d' ? 'sr-only' : ''}`}>
+          <motion.div className="mt-6 flex flex-wrap items-center gap-3" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1, duration: 0.7, ease: EASE }}>
+            <Link to="/contact" className="btn btn-primary hidden md:inline-flex">Start your project</Link>
+            <button type="button" onClick={skipToServices} className="btn btn-ghost !min-h-[44px] !px-4 text-sm sm:!px-5 sm:text-[15px]">Skip to services <span aria-hidden="true">↓</span></button>
+          </motion.div>
+          <ul className="mt-5 flex flex-wrap gap-2">
             {SERVICES.map((s) => (
               <li key={s.id}><Link to={`/services/${s.slug}`} className="inline-flex min-h-[40px] items-center gap-2 rounded-full border border-sky/30 bg-night/60 px-3.5 text-sm backdrop-blur"><span className="h-2 w-2 rounded-full bg-sky shadow-[0_0_10px_2px_rgba(143,211,255,0.8)]" />{s.short}</Link></li>
             ))}
           </ul>
         </div>
       </div>
-
-      {/* Skip the flight (first visit only) */}
-      {mode === '3d' && !introDone && (
-        <button type="button" onClick={skipToServices} className="btn btn-ghost absolute right-4 top-20 !min-h-[40px] !px-4 text-sm sm:right-8 sm:top-24">Skip to services</button>
-      )}
-
-      {/* Flash into the chosen service */}
-      <AnimatePresence>
-        {leaving && <motion.div className="absolute inset-0 z-30 bg-[radial-gradient(circle_at_center,#cfeaff,#8fd3ff_40%,#070b1f)]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.38, ease: EASE }} />}
-      </AnimatePresence>
     </section>
   )
 }

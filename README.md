@@ -1,6 +1,6 @@
 # Singing Cloud Project: website
 
-The Singing Cloud Project website: a 3D "Step into the Cloud Studio" entrance, five service pages, a filterable portfolio, a web design showcase and a contact form.
+The Singing Cloud Project website: a video hero ("Step into the Cloud Studio"), five service pages, a filterable portfolio, a web design showcase and a contact form.
 Live at **https://singingcloudproject.com/**. It's a **draft**, hidden from Google ("noindex"), until you approve the final version.
 
 ## What's where
@@ -11,7 +11,7 @@ Live at **https://singingcloudproject.com/**. It's a **draft**, hidden from Goog
 | Service texts, “who it’s for”, **prices** | `src/data/services.js` |
 | Portfolio pieces (titles, labels, which service pages show them) | `src/data/portfolio.js` |
 | Colours and fonts | `src/index.css` (top `@theme` block) and `index.html` (Google Fonts link) |
-| The 3D studio (screens, objects, hotspots) | `src/three/Studio.jsx` |
+| The home page hero video | `media-source/hero/vertical.mp4` + `horizontal.mp4`, then `npm run hero` (see below) |
 
 ### Add your WhatsApp number
 Open `src/config/site.js` and put your number in `whatsapp: ''`, using digits only with the country code (for example `'447700900123'`). Then publish. All WhatsApp buttons appear automatically. Until then, Instagram DM buttons are shown instead.
@@ -48,7 +48,12 @@ This builds the site and puts it on GitHub Pages (account **singingcloudproject*
 **Going live for real (when you approve):** set `isDraft: false` in `src/config/site.js`, remove the `noindex` line in `index.html`, and change `public/robots.txt` to `Allow: /`.
 
 ## Good to know
-- **Phones first:** the 3D studio loads only on the home page. Phones that are too weak (or without 3D support), "save data" mode and "reduce motion" all get a calm still version instead.
+- **Phones first:** the hero is a muted looping video (9:16 on phones, 16:9 on laptops) with a poster image, so something shows instantly even when a phone won't play video. "Save data" and "reduce motion" get the still poster.
 - **No sound anywhere:** portfolio videos are silent.
 - **Honest labels:** "Concept" means the studio's own creative work. Pieces showing a real brand say "Concept piece — not affiliated with [brand]".
-- The 3D pauses when you scroll away or switch tabs, to save battery.
+- The hero video pauses when you scroll away or switch tabs, to save battery.
+
+### Change the hero video
+1. Put your phone video (9:16) in `media-source/hero/` named `vertical` (for example `vertical.mp4` or `vertical.mov`), and your laptop video (16:9) there named `horizontal`.
+2. Run `npm run hero`. It trims to 12 seconds, removes sound, and makes small MP4 + WebM copies and a poster image in `public/media/hero/`.
+3. Publish with `npm run deploy`. If a file is missing, a placeholder is used instead.

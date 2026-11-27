@@ -10,7 +10,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // three.js + 3D helpers stay in the lazily loaded Studio chunk (only the home page loads them)
+          // keep gsap in its own chunk
           if (id.includes('node_modules/gsap')) return 'gsap'
         },
       },

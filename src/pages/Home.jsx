@@ -25,7 +25,7 @@ function AutomationArt() {
       {['instagram', 'whatsapp', 'telegram', 'chatgpt'].map((n, i) => (
         <span key={n} className="absolute flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-lg"
           style={{ transform: `rotate(${i * 90 + 45}deg) translateY(-92px) rotate(-${i * 90 + 45}deg)` }}>
-          <img src={`/icons/${n}.svg`} alt="" width="24" height="24" />
+          <img src={`/icons/${n}.svg`} alt="" width="24" height="24" loading="lazy" />
         </span>
       ))}
     </div>

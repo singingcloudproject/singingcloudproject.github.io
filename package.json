@@ -8,7 +8,6 @@
     "build": "vite build && node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\"",
     "preview": "vite preview",
     "media": "node scripts/optimize-media.mjs",
-    "hero": "node scripts/hero-video.mjs",
     "deploy": "node scripts/deploy-pages.mjs",
     "capture": "node scripts/capture-site.mjs"
   },

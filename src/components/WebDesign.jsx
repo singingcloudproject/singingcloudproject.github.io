@@ -64,7 +64,7 @@ export default function WebDesign() {
               </motion.div>
             </div>
             <div className="pt-6 lg:pt-0">
-              <p className="kicker !text-sky">{site.kindLabel}</p>
+              <p className="kicker !text-sky">Website</p>
               <h3 className="display mt-3 text-4xl">{site.title}</h3>
               <p className="mt-4 text-lg text-mute">{site.description}</p>
               <ul className="mt-6 flex flex-wrap gap-2" aria-label="Features">
@@ -78,11 +78,11 @@ export default function WebDesign() {
         <motion.div {...reveal} className="glass mt-20 flex flex-col items-start gap-6 rounded-3xl p-6 sm:p-10 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="display text-3xl sm:text-4xl">Want a website like this? <span className="italic text-sky">Let’s build yours.</span></p>
-            <p className="mt-2 text-mute">One-page websites from $500, including three months of support.</p>
+            <p className="mt-2 text-mute">Design, development, support and SEO, from the first sketch to launch day.</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <Link to="/contact" state={{ service: 'Websites' }} className="btn btn-primary">Start my website</Link>
-            <DirectButtons message="Hi! I’d like a website like your jewelry store demo." compact />
+            <Link to="/contact" state={{ service: 'Website & SEO' }} className="btn btn-primary">Start my website</Link>
+            <DirectButtons message="Hi! I’d like a website like your jewelry store." compact />
           </div>
         </motion.div>
       </div>

@@ -1,99 +1,210 @@
 @import 'tailwindcss';
 
-/* ── Brand tokens: Midnight sky studio ───────────────────────── */
-@theme {
-  --color-night: #070b1f;      /* page background */
-  --color-deep: #0d1433;       /* raised surfaces */
-  --color-panel: #121a40;      /* cards */
-  --color-line: #24305e;       /* hairlines */
-  --color-ink: #eef2ff;        /* main text */
-  --color-mute: #a3add6;       /* secondary text (AA on night) */
-  --color-sky: #8fd3ff;        /* glowing cloud blue, the accent */
-  --color-sky-deep: #3b9bff;
-  --color-gold: #e7c27d;       /* soft gold touches */
+/* ── Fonts (stored on the site itself, so they work on every device) ──
+   Pixelify Sans: free under the SIL Open Font License (public/fonts/PixelifySans-OFL.txt). */
+@font-face { font-family: 'Pixelify Sans'; src: url('/fonts/pixelify-sans-400.woff2') format('woff2'), url('/fonts/pixelify-sans-400.woff') format('woff'); font-weight: 400; font-display: block; }
+@font-face { font-family: 'Pixelify Sans'; src: url('/fonts/pixelify-sans-700.woff2') format('woff2'), url('/fonts/pixelify-sans-700.woff') format('woff'); font-weight: 700; font-display: block; }
 
-  --font-display: 'Instrument Serif', 'Times New Roman', serif;
-  --font-sans: 'Manrope', system-ui, sans-serif;
+/* ── Brand tokens: Windows XP "Luna" ───────────────────────── */
+@theme {
+  --color-night: #123a8f;      /* deep XP blue (overlays, lightbox) */
+  --color-deep: #1a4aa8;
+  --color-panel: #2459c2;      /* cards */
+  --color-line: #6f9be6;
+  --color-ink: #ffffff;        /* text on blue */
+  --color-mute: #e4edff;       /* secondary text on blue (AA) */
+  --color-sky: #cfe6ff;
+  --color-sky-deep: #3a8af0;
+  --color-gold: #ffd34d;       /* XP yellow accent */
+
+  --font-display: 'Pixelify Sans', Tahoma, Verdana, sans-serif;
+  --font-sans: Tahoma, Verdana, 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+  --font-title: 'Trebuchet MS', Tahoma, Verdana, 'Segoe UI', system-ui, sans-serif;
 
   --ease-out-soft: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out-soft: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-html { background: var(--color-night); color-scheme: dark; -webkit-text-size-adjust: 100%; overflow-x: clip; }
+html { background: #2a63c9; color-scheme: light; -webkit-text-size-adjust: 100%; overflow-x: clip; }
 body {
-  margin: 0; background: var(--color-night); color: var(--color-ink);
-  font-family: var(--font-sans); font-size: 16px; line-height: 1.6;
+  margin: 0; color: var(--color-ink); min-height: 100vh;
+  background: linear-gradient(180deg, #2f6fd6 0%, #4f8ee8 30%, #3b78dd 70%, #2558bd 100%);
+  font-family: var(--font-sans); font-size: 16px; line-height: 1.55;
   -webkit-font-smoothing: antialiased; overflow-x: clip;
 }
-::selection { background: var(--color-sky); color: var(--color-night); }
+::selection { background: #316ac5; color: #fff; }
 @layer base {
   img, video { max-width: 100%; display: block; }
   a { color: inherit; }
 }
 
-/* Focus: crisp and visible */
-:focus-visible { outline: 2px solid var(--color-sky); outline-offset: 3px; border-radius: 6px; }
+/* Focus: XP dotted focus ring, always visible on keyboard use */
+:focus-visible { outline: 2px dotted #000; outline-offset: 2px; }
+.xp-header :focus-visible, .xp-footer :focus-visible, .xp-taskbar :focus-visible { outline-color: #fff; }
+
+/* Cloud cursor (mouse only; phones don't have a cursor) */
+@media (pointer: fine) {
+  html, body { cursor: url('/media/ui/cloud-cursor.png') 15 11, auto; }
+  a, button, [role='button'], select, label, summary, .cloud-spot { cursor: url('/media/ui/cloud-cursor.png') 15 11, pointer; }
+  input, textarea { cursor: text; }
+}
 
 @layer components {
-/* Shared building blocks */
-.wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: 20px; }
+.wrap { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: 16px; }
 @media (min-width: 768px) { .wrap { padding-inline: 40px; } }
 
-.display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; line-height: 1.02; }
-.kicker { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-gold); font-weight: 600; }
+.pixel, .display { font-family: var(--font-display); font-weight: 400; letter-spacing: 0.01em; line-height: 1.05; }
+.kicker, .xp-kicker { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; }
+.kicker { color: var(--color-gold); }
+.xp-kicker { color: #2f62c8; }
 
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  min-height: 48px; padding: 0 22px; border-radius: 999px; font-weight: 600; font-size: 15px;
-  text-decoration: none; white-space: nowrap; cursor: pointer; border: 1px solid transparent;
-  transition: transform 160ms var(--ease-out-soft), background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+/* ── XP window ─────────────────────────────────────────────── */
+.xp-window {
+  position: relative; display: flex; flex-direction: column;
+  background: #0831d9; padding: 0 3px 3px; border-radius: 8px 8px 0 0;
+  box-shadow: 0 10px 30px -8px rgba(0, 20, 80, 0.55);
 }
-.btn:active { transform: scale(0.97); }
-.btn-primary {
-  background: linear-gradient(180deg, #b6e3ff, var(--color-sky)); color: #06122e;
-  box-shadow: 0 0 0 1px rgba(143, 211, 255, 0.4), 0 10px 40px -10px rgba(143, 211, 255, 0.7);
+.xp-titlebar {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  min-height: 30px; margin: 0 -3px; padding: 3px 5px 3px 9px; border-radius: 7px 7px 0 0;
+  background: linear-gradient(180deg, #0997ff 0%, #0053ee 8%, #0050ee 40%, #0066ff 88%, #0066ff 93%, #005bff 95%, #003dd7 96%, #003dd7 100%);
+  user-select: none;
 }
-.btn-ghost { border-color: rgba(238, 242, 255, 0.22); color: var(--color-ink); background: rgba(13, 20, 51, 0.5); backdrop-filter: blur(10px); }
+.xp-title {
+  min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font: 700 15px/1.2 var(--font-title); color: #fff; letter-spacing: 0.01em; text-shadow: 1px 1px 0 #0f1089;
+}
+.xp-controls { display: flex; gap: 2px; flex-shrink: 0; }
+.xp-ctl {
+  position: relative; display: block; width: 22px; height: 22px; padding: 0; border: 1px solid #fff; border-radius: 3px;
+  background: linear-gradient(135deg, #3c8cff 0%, #2267ef 45%, #1a4fd0 100%); box-shadow: inset -1px -1px 2px rgba(0, 0, 60, 0.35);
+}
+button.xp-ctl:hover { filter: brightness(1.15); }
+.xp-ctl.xp-close { background: linear-gradient(135deg, #f19a7d 0%, #e45c39 40%, #c63a17 100%); }
+.xp-ctl::before, .xp-ctl::after { content: ''; position: absolute; background: #fff; }
+.xp-min::before { left: 5px; bottom: 5px; width: 8px; height: 3px; }
+.xp-max::before { left: 4px; top: 4px; width: 12px; height: 12px; background: transparent; border: 2px solid #fff; border-top-width: 3px; }
+.xp-close::before, .xp-close::after { left: 50%; top: 50%; width: 13px; height: 2.5px; }
+.xp-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+.xp-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.xp-body { flex: 1; background: #ece9d8; color: #000; }
+
+.xp-panel { background: #ece9d8; color: #000; border: 1px solid #0831d9; box-shadow: 0 10px 30px -10px rgba(0, 20, 80, 0.5); }
+.xp-inset { background: #fff; border: 1px solid #7f9db9; color: #000; }
+.xp-chip { background: #fff; border: 1px solid #7f9db9; border-radius: 3px; padding: 5px 12px; font-size: 15px; color: #000; }
+.xp-check { color: #2e8b22; font-weight: 700; }
+.xp-link { color: #0033cc; text-decoration: none; }
+.xp-link:hover { text-decoration: underline; }
+
+/* ── XP buttons: solid black text, never greyed out ───────── */
+.xp-btn, .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 32px; padding: 0 16px; border: 1px solid #003c74; border-radius: 3px;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f3ee 35%, #ece9d8 86%, #d8d0c4 100%);
+  font: 400 14px/1 var(--font-sans); color: #000 !important; text-decoration: none; white-space: nowrap; user-select: none; -webkit-user-select: none;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+  transition: box-shadow 120ms ease, filter 120ms ease;
+}
+.xp-btn:hover, .btn:hover { box-shadow: inset 0 0 0 1px #fbd37a, inset 0 -2px 0 #e5a01a, inset 0 2px 0 #ffefc6; }
+.xp-btn:active, .btn:active { background: linear-gradient(180deg, #d8d0c4 0%, #e5e2d6 50%, #f0eee6 100%); }
+.xp-btn-default, .btn-primary { box-shadow: inset 0 0 0 1px #9dbaf3, inset 0 -2px 0 #6c96e6; font-weight: 700; }
+.xp-btn-lg, .btn { min-height: 42px; padding: 0 18px; font-size: 15px; }
+.xp-btn[disabled] { color: #000 !important; opacity: 1; }
+.btn-ghost { font-weight: 400; }
+
+/* ── Form fields ─────────────────────────────────────────── */
+.xp-label { display: grid; gap: 5px; font-size: 14px; font-weight: 700; color: #000; }
+.xp-input {
+  width: 100%; border: 1px solid #7f9db9; border-radius: 0; background: #fff; color: #000;
+  padding: 9px 10px; font: 400 16px/1.4 var(--font-sans); /* 16px stops iPhones zooming in */
+}
+.xp-input:focus { outline: none; border-color: #316ac5; box-shadow: 0 0 0 2px #c6dcff; }
+.xp-input::placeholder { color: #6d6d6d; }
+
+/* ── Progress bar (classic blue segments) ─────────────────── */
+.xp-progress { height: 22px; padding: 2px; background: #fff; border: 1px solid #686868; border-radius: 3px; }
+.xp-progress-fill { height: 100%; background: repeating-linear-gradient(90deg, #10208c 0 12px, transparent 12px 16px); transition: width 120ms linear; }
+
+/* ── Header (XP taskbar blue), tray buttons, nav ──────────── */
+.xp-header { background: linear-gradient(180deg, #3d95ff 0%, #2a6ff0 12%, #245ddb 50%, #1f53c9 88%, #193f9f 100%); border-bottom: 1px solid #0a246a; box-shadow: 0 2px 8px rgba(0, 20, 80, 0.3); }
+.xp-brand { font-family: var(--font-display); font-size: 21px; color: #fff; text-shadow: 1px 1px 0 #0a246a; white-space: nowrap; }
+@media (max-width: 430px) { .xp-brand { font-size: 17px; } }
+@media (max-width: 350px) { .xp-brand { font-size: 15px; } }
+.xp-nav { padding: 7px 12px; border-radius: 3px; font-size: 14px; font-weight: 700; color: #fff; text-decoration: none; }
+.xp-nav:hover { background: rgba(255, 255, 255, 0.18); }
+.xp-tray-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; height: 40px; padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4); border-radius: 4px; background: rgba(255, 255, 255, 0.14); color: #fff;
+}
+.xp-tray-btn:hover { background: rgba(255, 255, 255, 0.26); }
+.xp-tray-btn[aria-pressed='true'] { background: rgba(255, 255, 255, 0.3); }
+
+/* Phone taskbar + green Start button */
+.xp-taskbar { background: linear-gradient(180deg, #3d95ff 0%, #2a6ff0 12%, #245ddb 50%, #1f53c9 88%, #193f9f 100%); border-top: 1px solid #0a246a; }
+.xp-start {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border-radius: 4px 14px 14px 4px;
+  background: linear-gradient(180deg, #5ccb4a 0%, #3c9a2c 45%, #2f8a22 100%); color: #fff; font-weight: 700; font-style: italic; font-size: 16px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); text-decoration: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* Start-menu style site menu */
+.start-menu { overflow: hidden; border: 1px solid #0831d9; border-radius: 8px 8px 0 0; background: #fff; box-shadow: 4px 8px 24px rgba(0, 0, 0, 0.45); color: #000; }
+.start-menu-top { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: linear-gradient(180deg, #1868ce 0%, #0e60cb 12%, #0e60cb 20%, #1164cf 32%, #1666d7 88%, #2b74e0 100%); font: 700 17px/1.2 var(--font-title); color: #fff; text-shadow: 1px 1px 0 #0a246a; }
+.start-menu-left { padding: 6px 0; }
+.start-menu-left a, .start-menu-right a { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 16px; font-size: 16px; color: #000; text-decoration: none; }
+.start-menu-left a:hover, .start-menu-left a:focus-visible, .start-menu-right a:hover, .start-menu-right a:focus-visible { background: #316ac5; color: #fff; outline: none; }
+.start-menu-right { padding: 6px 0; background: #d3e5fa; border-left: 1px solid #95bdee; }
+@media (max-width: 639px) { .start-menu-right { border-left: 0; border-top: 1px solid #95bdee; } }
+.start-menu-bottom { display: flex; justify-content: flex-end; gap: 8px; padding: 8px 10px; background: linear-gradient(180deg, #4282d6 0%, #3b85e0 4%, #418ae3 6%, #418ae3 10%, #3168d5 90%, #1d4ccf 100%); }
+
+/* Footer */
+.xp-footer { background: linear-gradient(180deg, #1f4eb4 0%, #163c8e 100%); border-top: 1px solid #0a246a; color: #fff; }
+.xp-footer-title { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: var(--color-gold); }
+.xp-footer .xp-link { color: #fff; }
+
+/* ── Balloon tips, tooltips, chips ───────────────────────── */
+.xp-balloon { position: absolute; padding: 10px 12px; background: #ffffe1; color: #000; border: 1px solid #000; border-radius: 8px; font-size: 15px; line-height: 1.4; box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3); }
+.xp-balloon::after { content: ''; position: absolute; left: 34px; bottom: -11px; width: 18px; height: 11px; background: #ffffe1; clip-path: polygon(0 0, 100% 0, 0 100%); }
+.xp-balloon::before { content: ''; position: absolute; left: 33px; bottom: -13px; width: 20px; height: 13px; background: #000; clip-path: polygon(0 0, 100% 0, 0 100%); }
+.xp-balloon-close { position: absolute; top: 3px; right: 4px; width: 26px; height: 26px; border: 0; background: transparent; font-size: 20px; line-height: 1; color: #000; }
+.xp-tooltip { padding: 5px 10px; background: #ffffe1; color: #000; border: 1px solid #000; font-size: 14px; box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.3); text-align: center; }
+.bf-chip { padding: 9px 12px; background: #ffffe1; color: #000; border: 1px solid #000; border-radius: 4px; font-size: 14px; box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.3); }
+
+/* Old shared helpers, restyled for XP */
+.glass { background: rgba(10, 36, 106, 0.55); border: 1px solid rgba(255, 255, 255, 0.25); }
 @media (hover: hover) and (pointer: fine) {
-  .btn-primary:hover { box-shadow: 0 0 0 1px rgba(143, 211, 255, 0.6), 0 14px 50px -8px rgba(143, 211, 255, 0.9); transform: translateY(-1px); }
-  .btn-ghost:hover { border-color: rgba(238, 242, 255, 0.5); }
   .lift { transition: transform 220ms var(--ease-out-soft); }
   .lift:hover { transform: translateY(-2px); }
   .zoom img, .zoom video { transition: transform 600ms var(--ease-out-soft); }
   .zoom:hover img, .zoom:hover video { transform: scale(1.03); }
 }
-
-.glass { background: rgba(13, 20, 51, 0.55); border: 1px solid rgba(143, 211, 255, 0.14); backdrop-filter: blur(14px); }
-.hairline { border-color: var(--color-line); }
-
-/* Soft star field used behind non-3D sections */
-.starfield {
-  background-image:
-    radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,.7), transparent 60%),
-    radial-gradient(1px 1px at 72% 12%, rgba(255,255,255,.5), transparent 60%),
-    radial-gradient(1.5px 1.5px at 40% 70%, rgba(190,225,255,.6), transparent 60%),
-    radial-gradient(1px 1px at 88% 60%, rgba(255,255,255,.5), transparent 60%),
-    radial-gradient(1px 1px at 25% 85%, rgba(255,255,255,.4), transparent 60%);
 }
 
+/* ── Clouds: companion, menu clouds ──────────────────────── */
+@keyframes bob { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-9px) } }
+.companion-cloud img, .companion-bob { animation: bob 3.4s ease-in-out infinite; }
+.companion-cloud img, .cloud-spot-img, .companion-bob { filter: grayscale(0.85) brightness(0.9) contrast(1.06) drop-shadow(0 8px 12px rgba(0, 20, 60, 0.28)); }
+.companion-cloud { border: 0; background: transparent; padding: 0; }
+.cloud-spot { border: 0; background: transparent; padding: 0; }
+.cloud-spot-img { animation: bob 4s ease-in-out infinite; transition: scale 200ms var(--ease-out-soft); }
+[data-hotspot]:nth-child(odd) .cloud-spot-img { animation-delay: -1.3s; }
+.cloud-spot:hover .cloud-spot-img, .cloud-spot:focus-visible .cloud-spot-img { scale: 1.07; }
+.cloud-label { position: relative; padding: 5px 11px; background: rgba(255, 255, 255, 0.95); color: #0a246a; border: 1px solid #0831d9; border-radius: 3px; font: 700 15px/1.2 var(--font-sans); white-space: nowrap; box-shadow: 0 2px 8px rgba(0, 20, 80, 0.3); }
+.cloud-spot:hover .cloud-label { background: #316ac5; color: #fff; }
+
+/* ── Hero dialog + flight effects ────────────────────────── */
+@keyframes exe-pop { from { transform: scale(0.94); opacity: 0 } to { transform: scale(1); opacity: 1 } }
+.exe-pop { animation: exe-pop 260ms var(--ease-out-soft); }
+@keyframes caret { 50% { opacity: 0 } }
+.caret { display: inline-block; width: 2px; height: 22px; margin-left: 3px; background: #000; vertical-align: -3px; animation: caret 1s steps(1) infinite; }
+.speed-lines {
+  background: repeating-conic-gradient(from 0deg at 62% 46%, rgba(255, 255, 255, 0) 0deg 4deg, rgba(255, 255, 255, 0.45) 4.3deg 4.7deg, rgba(255, 255, 255, 0) 5deg 9deg);
+  -webkit-mask-image: radial-gradient(circle at 62% 46%, transparent 0 16%, #000 62%); mask-image: radial-gradient(circle at 62% 46%, transparent 0 16%, #000 62%);
 }
 
-/* Hotspot pulse (3D labels) */
-@keyframes pulse-ring { 0% { transform: scale(0.9); opacity: 0.8 } 100% { transform: scale(2.2); opacity: 0 } }
-.pulse::before, .pulse::after {
-  content: ''; position: absolute; inset: 0; border-radius: 999px; border: 2px solid var(--color-sky);
-  animation: pulse-ring 2.6s var(--ease-out-soft) infinite;
-}
-.pulse::after { animation-delay: 1.3s; }
-
-/* Hero: slow push-in on the video/poster so the hero still moves when a phone won't autoplay */
-@keyframes hero-drift { from { transform: scale(1.04) } to { transform: scale(1.16) translate3d(-1.5%, -1%, 0) } }
-.hero-drift { animation: hero-drift 16s ease-in-out infinite alternate; will-change: transform; }
-
-/* Phone mockup scroll preview */
+/* Phone mockup scroll preview (web design section) */
 @keyframes page-scroll { 0%, 8% { transform: translateY(0) } 92%, 100% { transform: translateY(calc(-100% + var(--frame-h))) } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
-  .pulse::before, .pulse::after { display: none; }
 }

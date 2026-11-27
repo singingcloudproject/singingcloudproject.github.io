@@ -10,14 +10,6 @@ const thumbOf = (item) => {
   return m.kind === 'video' ? `${M}/video/${m.id}.webp` : `${M}/work/${m.id}-sm.webp`
 }
 
-function Label({ children }) {
-  const long = children.length > 14
-  return (
-    <span className={`rounded-xl border border-white/15 bg-night/75 px-2.5 py-1 text-[11px] leading-tight font-semibold tracking-wide backdrop-blur-md ${long ? 'text-gold' : 'text-ink/90'}`}>
-      {children}
-    </span>
-  )
-}
 
 export function WorkCard({ item, onOpen, i = 0 }) {
   const ref = useRef()
@@ -39,7 +31,7 @@ export function WorkCard({ item, onOpen, i = 0 }) {
       initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.96 }}
       transition={{ duration: 0.55, ease: EASE, delay: Math.min(i * 0.04, 0.3) }}
       className="lift zoom group relative block w-full overflow-hidden rounded-2xl bg-panel text-left"
-      aria-label={`${item.title}: ${item.label}. ${vid ? 'Play video' : isSet ? `View ${item.media.length} images` : 'View larger'}`}>
+      aria-label={`${item.title}. ${vid ? 'Play video' : isSet ? `View ${item.media.length} images` : 'View larger'}`}>
       <div className="relative" style={{ aspectRatio: '4/5' }}>
         {vid ? (
           <video src={`${M}/video/${vid.id}-loop.mp4`} poster={thumbOf(item)} muted loop playsInline preload="none" className="absolute inset-0 h-full w-full object-cover" />
@@ -47,7 +39,6 @@ export function WorkCard({ item, onOpen, i = 0 }) {
           <img src={thumbOf(item)} alt={item.alt} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
         )}
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-night/90 to-transparent" />
-        <div className="absolute left-2.5 right-12 top-2.5 flex flex-wrap gap-1.5"><Label>{item.label}</Label></div>
         {(vid || isSet) && (
           <span className="absolute right-2.5 top-2.5 flex h-8 min-w-8 items-center justify-center rounded-full bg-night/70 px-2 text-xs font-semibold backdrop-blur-md" aria-hidden="true">
             {vid ? '▶' : `1/${item.media.length}`}
@@ -87,7 +78,6 @@ export function Lightbox({ item, onClose }) {
           <div className="wrap flex items-center justify-between gap-4 py-4">
             <div className="min-w-0">
               <p className="truncate font-semibold">{item.title}</p>
-              <p className="truncate text-sm text-gold">{item.label}</p>
             </div>
             <button ref={closeBtn} type="button" onClick={onClose} className="btn btn-ghost !min-h-[44px] shrink-0 !px-4" aria-label="Close">Close ✕</button>
           </div>

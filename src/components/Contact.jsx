@@ -46,7 +46,7 @@ export function EnquiryForm({ defaultService = '' }) {
   const field = 'w-full rounded-2xl border border-line bg-night/60 px-4 py-3.5 text-ink placeholder:text-mute/70 outline-none transition-[border-color] duration-200 focus:border-sky'
   return (
     <form onSubmit={onSubmit} className="glass grid gap-4 rounded-3xl p-5 sm:p-8">
-      <input type="hidden" name="_subject" value="New project enquiry: Singing Cloud Studio" />
+      <input type="hidden" name="_subject" value="New project enquiry: Singing Cloud Project" />
       <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="grid gap-1.5 text-sm font-medium">Your name

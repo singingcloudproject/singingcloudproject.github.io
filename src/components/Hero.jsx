@@ -95,7 +95,7 @@ export default function Hero() {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 pb-[104px] md:pb-14">
         <div className="wrap">
           <motion.p className="kicker" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: skipIntro ? 0.2 : 1.2, duration: 0.8, ease: EASE }}>
-            Singing Cloud Studio
+            Singing Cloud Project
           </motion.p>
           <h1 className="display mt-2 max-w-[14ch] text-[clamp(40px,10.5vw,104px)] sm:mt-3">
             {['Step', 'into', 'the', 'Cloud', 'Studio.'].map((w, i) => (

@@ -91,7 +91,7 @@ export const PORTFOLIO = [
   { id: 'jewelry-store', title: 'Luxury jewelry store', category: 'websites', services: ['websites'], label: 'Demo',
     kindLabel: 'Luxury jewelry store — Demo',
     alt: 'The luxury jewelry store website on a phone and a laptop',
-    url: 'https://singingcloudproject.github.io/jewelry-store-demo/',
+    url: 'https://singingcloudproject.com/jewelry-store-demo/',
     description: 'A boutique you can step into: a cinematic scroll journey, a 360° store with glowing display cases, and a full catalogue.',
     tags: ['360° store', 'Mobile-first', 'Cinematic animations', 'Contact form', 'Filters & product pages'],
     shots: { phone: 'sites/jewelry-phone.webp', phoneTall: 'sites/jewelry-phone-tall.webp', desktop: 'sites/jewelry-desktop.webp', video: 'sites/jewelry-scroll.mp4' } },

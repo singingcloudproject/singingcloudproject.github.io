@@ -1,7 +1,7 @@
 // Publishes the site:  npm run deploy
 // 1. Builds the site into dist/
 // 2. Puts the built files on the `main` branch of singingcloudproject.github.io (that is what
-//    GitHub Pages shows at https://singingcloudproject.github.io/). Earlier versions stay in the history.
+//    GitHub Pages shows at https://singingcloudproject.com/). Earlier versions stay in the history.
 import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import os from 'node:os'
@@ -28,4 +28,4 @@ const source = out('git rev-parse --short HEAD')
 run(`git -c user.name="${name}" -c user.email="${email}" commit -q -m "Publish site (source ${source})"`, tmp)
 run('git push -q origin main', tmp)
 fs.rmSync(tmp, { recursive: true, force: true })
-console.log('\nPublished. Live in about a minute: https://singingcloudproject.github.io/')
+console.log('\nPublished. Live in about a minute: https://singingcloudproject.com/')

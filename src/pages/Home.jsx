@@ -122,7 +122,7 @@ function Process() {
 }
 
 export default function Home() {
-  useMeta(null, 'Singing Cloud Studio creates AI videos and photos, websites, social media content, logos and AI assistants for clinics, small businesses, brands, teachers, coaches and creators.')
+  useMeta(null, 'Singing Cloud Project creates AI videos and photos, websites, social media content, logos and AI assistants for clinics, small businesses, brands, teachers, coaches and creators.')
   return (
     <>
       <Hero />

@@ -29,7 +29,7 @@ function Header() {
     <header className={`fixed inset-x-0 top-0 z-40 transition-[background-color,border-color] duration-300 ${scrolled || open ? 'border-b border-line/60 bg-night/80 backdrop-blur-xl' : 'border-b border-transparent'}`}>
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-full focus:bg-sky focus:px-4 focus:py-2 focus:text-night">Skip to content</a>
       <div className="wrap flex h-16 items-center justify-between gap-4 sm:h-[72px]">
-        <Link to="/" aria-label="Singing Cloud Studio, home"><LogoMark /></Link>
+        <Link to="/" aria-label="Singing Cloud Project, home"><LogoMark /></Link>
         <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
           {NAV.map((n) => (
             <NavLink key={n.to} to={n.to} className="text-[15px] text-mute transition-colors duration-200 hover:text-ink">{n.label}</NavLink>
@@ -107,7 +107,7 @@ function Footer() {
         </div>
       </div>
       <div className="wrap mt-12 flex flex-col gap-2 text-sm text-mute/80 sm:flex-row sm:justify-between">
-        <p>© {new Date().getFullYear()} Singing Cloud Studio</p>
+        <p>© {new Date().getFullYear()} Singing Cloud Project</p>
         <p>Pieces marked “Concept” are the studio’s own creative work, made to show what’s possible.</p>
       </div>
     </footer>

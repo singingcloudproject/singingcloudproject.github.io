@@ -1,7 +1,7 @@
-# Singing Cloud Studio: website
+# Singing Cloud Project: website
 
-The Studio's website: a 3D "Step into the Cloud Studio" entrance, five service pages, a filterable portfolio, a web design showcase and a contact form.
-Live at **https://singingcloudproject.github.io/**. It's a **draft**, hidden from Google ("noindex"), until you approve the final version.
+The Singing Cloud Project website: a 3D "Step into the Cloud Studio" entrance, five service pages, a filterable portfolio, a web design showcase and a contact form.
+Live at **https://singingcloudproject.com/**. It's a **draft**, hidden from Google ("noindex"), until you approve the final version.
 
 ## What's where
 

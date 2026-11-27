@@ -5,7 +5,7 @@ import { reveal } from '../lib/motion.js'
 import { useMeta } from '../lib/meta.js'
 
 export default function WorkPage() {
-  useMeta('Work', 'AI videos, AI photos, websites and Instagram carousels made by Singing Cloud Studio.')
+  useMeta('Work', 'AI videos, AI photos, websites and Instagram carousels made by Singing Cloud Project.')
   return (
     <>
       <section className="pb-16 pt-28 sm:pt-36">

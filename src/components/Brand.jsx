@@ -16,7 +16,7 @@ export function LogoMark({ className = '' }) {
   return (
     <span className={`flex items-center gap-2.5 ${className}`}>
       <img src="/media/logo/cloud-mark.webp" alt="" aria-hidden="true" width="44" height="28" className="h-7 w-auto drop-shadow-[0_0_14px_rgba(143,211,255,0.45)]" />
-      <span className="font-display text-[22px] leading-none tracking-tight">Singing Cloud <span className="italic text-sky">Studio</span></span>
+      <span className="font-display text-[22px] leading-none tracking-tight">Singing Cloud <span className="italic text-sky">Project</span></span>
     </span>
   )
 }

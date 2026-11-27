@@ -13,8 +13,8 @@ export const SITE = {
   // Black Friday offer: shown until the end of this day (visitor's own clock), then it disappears by itself.
   offerEnds: new Date(2026, 11, 7, 23, 59, 59),
 
-  // Draft mode keeps the site hidden from Google ("noindex"). Set to false only when approved.
-  isDraft: true,
+  // Approved as final on 2026-11-27: the site is open to Google (see index.html and public/robots.txt).
+  isDraft: false,
 }
 
 export const igLink = `https://ig.me/m/${SITE.instagram}`

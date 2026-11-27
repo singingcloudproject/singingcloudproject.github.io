@@ -1,7 +1,7 @@
 # Singing Cloud Project: website
 
 The Singing Cloud Project website: a video hero ("Step into the Cloud Studio"), five service pages, a filterable portfolio, a web design showcase and a contact form.
-Live at **https://singingcloudproject.com/**. It's a **draft**, hidden from Google ("noindex"), until you approve the final version.
+Live at **https://singingcloudproject.com/** and open to Google since 27 Nov 2026 (sitemap: /sitemap.xml).
 
 ## What's where
 
@@ -45,7 +45,7 @@ npm run deploy
 
 This builds the site and puts it on GitHub Pages (account **singingcloudproject**). It's live about a minute later. The code itself is kept on the `source` branch of the same repository.
 
-**Going live for real (when you approve):** set `isDraft: false` in `src/config/site.js`, remove the `noindex` line in `index.html`, and change `public/robots.txt` to `Allow: /`.
+**Pages for Google:** `npm run build` also writes one HTML file per page, `sitemap.xml` and a no-index `404.html` (`scripts/prerender-routes.mjs`). Add a new page there too.
 
 ## Good to know
 - **Phones first:** the hero is a muted looping video (9:16 on phones, 16:9 on laptops) with a poster image, so something shows instantly even when a phone won't play video. "Save data" and "reduce motion" get the still poster.
